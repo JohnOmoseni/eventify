@@ -62,7 +62,8 @@ export default withUt({
         raleway: ["Raleway", "Arial", "sans-serif"],
       },
       fontSize: {
-        base: ["0.85rem", { lineHeight: "1.4" }],
+        sm: "0.8rem",
+        base: ["0.86rem", { lineHeight: "1.4" }],
         subtitle: ["clamp(1.1rem, 3vw, 20px)", { lineHeight: "1.2" }],
         secondaryFont: ["clamp(2rem, 6vw, 32px) ", { lineHeight: "1.2" }],
         primaryFont: ["clamp(2.5rem, 6vw, 48px)", { lineHeight: "1.2" }],
