@@ -3,11 +3,9 @@ export const URLS = {
   signup: "/sign-up",
   signin: "/sign-in",
 
-  // dashboard
-  dashboard: "/dashboard",
-
   // events
   createEvent: "/events/create",
+  updateEvent: "/events/update",
 
   // profile
   profile: "/profile",
