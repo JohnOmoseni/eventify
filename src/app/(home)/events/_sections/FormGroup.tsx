@@ -30,7 +30,7 @@ export default function FormGroup({
       >
         {children}
       </div>
-      <p className="mb-2.5 ml-[1px] mt-1 hidden text-[0.75rem] font-medium text-rose-500 animate-in group-[.is-error]:block">
+      <p className="mb-2 ml-[1px] mt-1 hidden text-[0.75rem] font-medium text-rose-500 animate-in group-[.is-error]:block">
         {errors[name] as string}
       </p>
     </div>

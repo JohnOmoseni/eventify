@@ -6,21 +6,35 @@ import Header from "./_sections/Header";
 import Menu from "@/components/Menu";
 import Footer from "./_sections/Footer";
 
-export default function Provider({
+import store from "@/redux/store";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const persistor = persistStore(store);
+
+export default function ProviderWrapper({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const [openMenu, setOpenMenu] = useState(false);
+  const queryClient = new QueryClient();
 
   return (
-    <>
-      <Header setOpenMenu={setOpenMenu} />
-      <AnimatePresence>
-        {openMenu && <Menu setOpenMenu={setOpenMenu} />}
-      </AnimatePresence>
-      {children}
-      <Footer />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Header setOpenMenu={setOpenMenu} />
+          <AnimatePresence>
+            {openMenu && <Menu setOpenMenu={setOpenMenu} />}
+          </AnimatePresence>
+          {children}
+          <Footer />
+        </PersistGate>
+      </Provider>
+    </QueryClientProvider>
   );
 }

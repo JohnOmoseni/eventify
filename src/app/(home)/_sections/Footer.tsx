@@ -12,14 +12,14 @@ const Footer = () => {
               alt="eventify"
               width={100}
               height={30}
-              className="!object-contain"
+              className="object-contain"
             />
           </Link>
-          <p className="max-w-[25ch] leading-5 max-sm:text-center">
+          <p className="max-w-[30ch] leading-5 max-sm:text-center max-sm:text-sm">
             Your Trusted Partner in Hassle-Free Bill Payments!
           </p>
         </div>
-        <p className="whitespace-nowrap text-center">
+        <p className="whitespace-nowrap text-center max-sm:text-sm sm:self-end">
           2024 Evently. All rights reserved.
         </p>
       </div>

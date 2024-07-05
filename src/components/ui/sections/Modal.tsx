@@ -1,4 +1,5 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 import { IoClose } from "react-icons/io5";
 
@@ -20,25 +21,52 @@ export default function Modal({
   return (
     <>
       <button onClick={() => setOpenModal(true)}>{trigger}</button>
-      <Dialog open={openModal} onClose={() => null} style={{ zIndex: 999 }}>
-        <div className="row-flex fixed inset-0 w-screen items-center justify-center bg-black/60 p-4 backdrop-blur-md">
-          <DialogPanel className="absolute left-[50%] top-[50vh] max-h-[400px] min-h-[300px] min-w-[300px] max-w-2xl -translate-x-[50%] -translate-y-[50%] space-y-4 overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm">
-            <DialogTitle className="text-center text-2xl capitalize">
-              {title}
-            </DialogTitle>
 
-            <span
-              className="absolute right-3 top-0 cursor-pointer text-foreground transition-colors active:scale-95"
-              onClick={() => setOpenModal(false)}
-              title="close"
+      <AnimatePresence>
+        {openModal && (
+          <Dialog static open={openModal} onClose={() => setOpenModal(false)}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ zIndex: 99 }}
+              className="fixed inset-0 bg-black/30 backdrop-blur-md"
+            />
+
+            <motion.div
+              // as={motion.div}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              style={{ zIndex: 999, transform: "translate(-50%, -50%)" }}
+              className="fixed grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
             >
-              <IoClose size="20" fill="#111" />
-            </span>
+              <DialogPanel
 
-            {dialogContent && dialogContent}
-          </DialogPanel>
-        </div>
-      </Dialog>
+              // as={motion.div}
+              // initial={{ opacity: 0, scale: 0.95 }}
+              // animate={{ opacity: 1, scale: 1 }}
+              // exit={{ opacity: 0, scale: 0.95 }}
+              >
+                <span
+                  className="absolute right-3 top-3 cursor-pointer text-foreground transition-colors active:scale-95"
+                  onClick={() => setOpenModal(false)}
+                  title="close"
+                >
+                  <IoClose size="20" fill="#111" />
+                </span>
+                <div className="">
+                  <DialogTitle className="my-3 text-center text-2xl capitalize">
+                    {title}
+                  </DialogTitle>
+
+                  {dialogContent && dialogContent}
+                </div>
+              </DialogPanel>
+            </motion.div>
+          </Dialog>
+        )}
+      </AnimatePresence>
     </>
   );
 }

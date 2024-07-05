@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge";
 
 interface InputFieldProps {
   type?: string;
-  name?: string;
+  id?: string;
   value: string;
   dir?: "left" | "right";
   placeholder?: string;
@@ -24,7 +24,7 @@ interface InputFieldProps {
 
 function InputField({
   type = "text",
-  name,
+  id,
   value,
   dir = "left",
   placeholder,
@@ -37,24 +37,23 @@ function InputField({
   return (
     <div
       className={twMerge(
-        "row-flex relative w-full !justify-start gap-1 overflow-hidden rounded-md border border-input shadow-sm group-[.is-error]:border-none",
-        render && "pr-2",
+        "row-flex relative w-full !justify-start gap-1 rounded-md border border-input shadow-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 group-[.is-error]:border-none",
       )}
     >
       {dir === "left" && Icon && (
-        <span className="icon -mt-0.5 pl-2 leading-none">
+        <span className="icon pl-2 leading-none">
           <Icon size={20} className="" />
         </span>
       )}
       <Input
         type={type}
-        name={name}
+        id={id}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
-        className="i-reset flex-1"
+        className={twMerge("i-reset flex-1 rounded-none", Icon && "px-1.5")}
       />
       {dir === "right" && Icon && (
         <span className="icon pr-2 leading-none">

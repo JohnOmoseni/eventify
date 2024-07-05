@@ -18,7 +18,7 @@ type HeaderProps = {
 const Header = ({ setOpenMenu }: HeaderProps) => {
   return (
     <header
-      className="relative w-full px-4 py-3 max-sm:shadow-sm sm:py-2"
+      className="relative w-full px-4 py-3 max-sm:shadow-sm"
       style={{ zIndex: 99 }}
     >
       <div className="row-flex-btwn mx-auto w-full gap-4">
@@ -48,7 +48,7 @@ const Header = ({ setOpenMenu }: HeaderProps) => {
             <Link href={URLS.signin}>
               <Button
                 title="Login"
-                className="bg-transparent text-foreground"
+                className="bg-transparent py-2 text-foreground"
               />
             </Link>
           </SignedOut>

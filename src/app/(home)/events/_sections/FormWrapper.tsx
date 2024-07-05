@@ -32,8 +32,8 @@ function FormWrapper({
 
             <Button
               type="submit"
-              title={buttonLabel}
-              className="mx-auto mt-12 px-12"
+              title={isSubmitting ? "Submitting..." : buttonLabel}
+              className="mx-auto mt-8 px-12"
               disabled={isSubmitting}
             />
           </form>

@@ -1,11 +1,14 @@
 type EventDetailsProps = {
-  params: {id: string}
+  params: { id: string };
 };
 
-function Events({params}: EventDetailsProps) {
+function Events({ params }: EventDetailsProps) {
+  const { id } = params;
+
   return (
-    <div>
-      <div>
+    <div className="flex-column sm:row-flex gap-4">
+      <div></div>
+      <div className="flex-column flex-1 gap-3">
         <h1>Github Universe 2023</h1>
 
         <div className="row-flex gap-4">

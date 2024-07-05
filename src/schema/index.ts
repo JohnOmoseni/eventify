@@ -22,5 +22,5 @@ export const eventFormSchema = yup.object().shape({
   endDateTime: yup.date(),
   price: yup.string(),
   isFree: yup.boolean().default(false),
-  url: yup.string().url(),
+  url: yup.string().url("Must be a valid URL"),
 });

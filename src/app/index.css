@@ -93,15 +93,14 @@
   .i-reset {
     @apply overflow-hidden truncate text-ellipsis whitespace-nowrap border-none bg-transparent outline-none transition-all focus:outline-none focus-visible:ring-0 focus-visible:ring-transparent;
   }
-  .p-section {
-    padding: max(4%, 3em) 0 max(4%, 2rem);
-  }
-
   .icon-bg {
     @apply text-foreground;
   }
   .badge {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  .btn-variant {
+    @apply border border-secondary bg-transparent py-2 text-foreground;
   }
 }
 

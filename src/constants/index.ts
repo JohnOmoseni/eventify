@@ -21,12 +21,12 @@ export const navLinks = [
   {
     name: "Create Event",
     tag: "create",
-    href: "/events/create",
+    href: URLS.createEvent,
   },
   {
     name: "My Profile",
     tag: "profile",
-    href: "/profile",
+    href: URLS.profile,
   },
 ];
 
