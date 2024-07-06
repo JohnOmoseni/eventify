@@ -28,7 +28,10 @@ async function Profile() {
         <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
           <h2 className="sm:text-left">My Tickets</h2>
           <Link href="/#events" className="">
-            <Button title="Explore more Event" className="hidden sm:flex" />
+            <Button
+              title="Explore more Event"
+              className="hidden min-w-[160px] px-4 sm:flex"
+            />
           </Link>
         </div>
 
@@ -52,7 +55,10 @@ async function Profile() {
         <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
           <h3 className="sm:text-left">Events Organized</h3>
           <Link href="/events/create" className="">
-            <Button title="Create New Event" className="hidden sm:flex" />
+            <Button
+              title="Create New Event"
+              className="hidden min-w-[160px] px-4 sm:flex"
+            />
           </Link>
         </div>
         <section className="my-6 self-center">

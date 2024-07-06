@@ -46,17 +46,15 @@ async function EventDetails({ params, searchParams }: EventDetailsProps) {
         {/* EVENTS WITH THE SAME CATEGORY */}
         <div className="my-8">
           <h2 className="mb-8 md:mb-12">Related Events</h2>
-          <Suspense fallback={<FallbackLoader />}>
-            <Collection
-              data={relatedEvents?.data}
-              emptyTitle="No Events Found"
-              emptySubText="Come back later"
-              collectionType="All_Events"
-              limit={6}
-              page={1}
-              totalPages={relatedEvents?.totalPages}
-            />
-          </Suspense>
+          <Collection
+            data={relatedEvents?.data}
+            emptyTitle="No Events Found"
+            emptySubText="Come back later"
+            collectionType="All_Events"
+            limit={6}
+            page={1}
+            totalPages={relatedEvents?.totalPages}
+          />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ import { twMerge } from "tailwind-merge";
 interface SelectDropdownProps {
   value: string;
   items: any[];
-  isFetchingList: boolean;
+  isFetchingList?: boolean;
   placeholder?: ReactNode;
   setValue: Dispatch<SetStateAction<any>>;
   itemStyle?: string;
@@ -42,7 +42,8 @@ export default function SelectDropdown({
           <span className="absolute inset-0 grid place-items-center">
             Loading...
           </span>
-        ) : items.length > 0 ? (
+        ) : (
+          items.length > 0 &&
           items?.map((item, idx) => (
             <SelectItem
               value={item?.name}
@@ -52,10 +53,6 @@ export default function SelectDropdown({
               {renderItem ? renderItem(item?.name) : item?.name}
             </SelectItem>
           ))
-        ) : (
-          <SelectItem value="no-item" className="row-flex text-center">
-            No item
-          </SelectItem>
         )}
 
         {otherContent && otherContent()}

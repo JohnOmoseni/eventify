@@ -48,14 +48,14 @@ async function EventForm({ event, eventId, userId, type }: EventFormProps) {
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
 
-  const { data: categoryList, isLoading: fetchingCategoryList } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getAllCategories(),
-  });
+  // const { data: categoryList, isLoading: fetchingCategoryList } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: () => getAllCategories(),
+  // });
 
-  useEffect(() => {
-    if (categoryList) setCategories(categoryList as ICategory[]);
-  }, [categoryList]);
+  // useEffect(() => {
+  //   if (categoryList) setCategories(categoryList as ICategory[]);
+  // }, [categoryList]);
 
   const onSubmit = async (
     values: InferType<typeof eventFormSchema>,
@@ -150,7 +150,7 @@ async function EventForm({ event, eventId, userId, type }: EventFormProps) {
         <SelectDropdown
           value={values.categoryId}
           items={categories}
-          isFetchingList={fetchingCategoryList}
+          // isFetchingList={fetchingCategoryList}
           setValue={(value) => {
             handleChange({
               target: {

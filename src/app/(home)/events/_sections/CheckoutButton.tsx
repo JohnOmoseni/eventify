@@ -29,7 +29,7 @@ function CheckoutButton({ event }: { event: IEvent }) {
             </Link>
           </SignedOut>
           <SignedIn>
-            <Checkout event={event} userId={userId} user={user} />
+            <Checkout event={event} userId={userId} />
           </SignedIn>
         </>
       )}

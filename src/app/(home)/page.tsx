@@ -18,17 +18,15 @@ export default async function Home() {
     <main>
       <Hero />
 
-      <Suspense fallback={<FallbackLoader />}>
-        <Collection
-          data={events?.data}
-          emptyTitle="No Events Found"
-          emptySubText="Come back later"
-          collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={events?.totalPages}
-        />
-      </Suspense>
+      <Collection
+        data={events?.data}
+        emptyTitle="No Events Found"
+        emptySubText="Come back later"
+        collectionType="All_Events"
+        limit={6}
+        page={1}
+        totalPages={events?.totalPages}
+      />
     </main>
   );
 }
