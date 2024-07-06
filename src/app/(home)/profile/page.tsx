@@ -25,14 +25,14 @@ async function Profile() {
   return (
     <>
       <div className="flex-column gap-6">
-        <div className="row-flex gap-4 py-6 sm:justify-between md:py-12">
+        <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
           <h2 className="sm:text-left">My Tickets</h2>
           <Link href="/#events" className="">
             <Button title="Explore more Event" className="hidden sm:flex" />
           </Link>
         </div>
 
-        <section className="my-8">
+        <section className="my-6 self-center">
           <Suspense fallback={<FallbackLoader />}>
             <Collection
               data={events?.data}
@@ -49,13 +49,13 @@ async function Profile() {
       </div>
 
       <div className="flex-column gap-6">
-        <div className="row-flex gap-4 py-6 sm:justify-between md:py-12">
+        <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
           <h3 className="sm:text-left">Events Organized</h3>
           <Link href="/events/create" className="">
             <Button title="Create New Event" className="hidden sm:flex" />
           </Link>
         </div>
-        <section className="my-8">
+        <section className="my-6 self-center">
           <Suspense fallback={<FallbackLoader />}>
             <Collection
               data={events?.data}

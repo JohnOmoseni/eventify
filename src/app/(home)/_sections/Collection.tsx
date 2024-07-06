@@ -22,7 +22,7 @@ function Collection({
   totalPages,
 }: CollectionProps) {
   return (
-    <div className="flex-column gap-10">
+    <div className="flex-column gap-6">
       {events?.length > 0 ? (
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-10 lg:grid-cols-3">
           {events.map((event, idx) => {
@@ -40,9 +40,9 @@ function Collection({
           })}
         </ul>
       ) : (
-        <div className="flex-column min-h-[200px] gap-3 py-28 text-center">
-          <h3 className="font-bold">{emptyTitle}</h3>
-          <p className="text-sm">{emptySubText}</p>
+        <div className="flex-column grid min-h-[150px] w-full place-items-center !items-center gap-2 px-3 py-4">
+          <h3 className="text-center font-bold">{emptyTitle}</h3>
+          <p className="text-center text-sm">{emptySubText}</p>
         </div>
       )}
     </div>
