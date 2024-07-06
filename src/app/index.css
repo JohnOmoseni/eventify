@@ -32,8 +32,10 @@
     --ring: #fa6800;
 
     --radius: 0.5rem;
-  }
 
+    --drop-shadow: #ffcda9;
+    --scroll-bg: #fa6800;
+  }
   .dark {
     --background: #fff;
     --background-100: #efefef;
@@ -57,9 +59,7 @@
     --input: 240 5.9% 90;
     --ring: #fa6800;
   }
-}
 
-@layer base {
   body {
     @apply bg-background text-foreground;
   }
@@ -77,6 +77,9 @@
 @layer utilities {
   .row-flex {
     @apply flex flex-row flex-nowrap items-center justify-center align-middle;
+  }
+  .row-flex-start {
+    @apply row-flex !justify-start;
   }
   .row-flex-btwn {
     @apply flex flex-row flex-nowrap items-center justify-between align-middle;
@@ -97,7 +100,7 @@
     @apply text-foreground;
   }
   .badge {
-    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply line-clamp-1 inline-flex w-min items-center rounded-full px-3 py-1 text-sm font-semibold capitalize transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1;
   }
   .btn-variant {
     @apply border border-secondary bg-transparent py-2 text-foreground;

@@ -1,35 +1,59 @@
 "use client";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { CSSProperties, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
+
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override: CSSProperties = {
+  display: "block",
+  // borderColor: "orange",
+};
 
 type LoaderProps = {
   loading?: boolean;
   label?: string;
-  setLoading?: Dispatch<SetStateAction<boolean>>;
   spinner?: ReactNode;
   render?: () => React.ReactNode;
+  containerStyles?: string;
 };
 
 const FallbackLoader = ({
-  loading,
-  setLoading,
-  spinner,
+  loading = true,
   label,
+  spinner,
   render,
+  containerStyles,
 }: LoaderProps) => {
   if (!loading) return null;
 
   return (
     <div
-      className="pointer-events-auto absolute inset-0 grid w-full select-none place-items-center"
+      className={twMerge(
+        "pointer-events-auto absolute inset-0 grid w-full select-none place-items-center",
+        containerStyles,
+      )}
       style={{ zIndex: 999 }}
     >
       {render ? (
         render()
       ) : (
-        <>
-          {spinner && spinner}
-          {label ?? "Loading..."}
-        </>
+        <div className="row-flex-start gap-2">
+          {spinner ? (
+            spinner
+          ) : (
+            <ClipLoader
+              color={"orange"}
+              loading={loading}
+              cssOverride={override}
+              size={30}
+              aria-label="Loading"
+              data-testid="loader"
+            />
+          )}
+          <h3 className="animate-pulse transition-sm">
+            {label ?? "Loading..."}
+          </h3>
+        </div>
       )}
     </div>
   );

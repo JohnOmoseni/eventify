@@ -1,36 +1,66 @@
+import { Suspense } from "react";
+import {
+  getEventById,
+  getRelatedEventsByCategory,
+} from "@/server/actions/event.actions";
+import Image from "next/image";
+import image from "@/images/hero.png";
+import Details from "../_sections/Details";
+import FallbackLoader from "@/components/fallbacks/FallbackLoader";
+import Collection from "../../_sections/Collection";
+
 type EventDetailsProps = {
   params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-function Events({ params }: EventDetailsProps) {
+async function EventDetails({ params, searchParams }: EventDetailsProps) {
   const { id } = params;
 
+  const event = await getEventById(id);
+  const relatedEvents = await getRelatedEventsByCategory({
+    eventId: event._id,
+    categoryId: event.category._id,
+    page: searchParams?.page as string,
+  });
+
+  console.log(event);
+
   return (
-    <div className="flex-column sm:row-flex gap-4">
-      <div></div>
-      <div className="flex-column flex-1 gap-3">
-        <h1>Github Universe 2023</h1>
-
-        <div className="row-flex gap-4">
-          <div className="text-secondary-foreground hover:bg-secondary/80 border-transparent bg-secondary">
-            $100
-          </div>
-          <div className="text-secondary-foreground hover:bg-secondary/80 border-transparent bg-secondary">
-            All
-          </div>
+    <div className="px-2 sm:px-4">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="relative">
+          <Image
+            src={event?.url ?? image}
+            alt="hero-image"
+            width={1000}
+            height={1000}
+            className="h-full min-h-[300px] object-contain object-center"
+          />
         </div>
-        <p className="text-base">
-          <span className="font-medium">by</span>{" "}
-          <span>Adrian | JS MAstery</span>
-        </p>
 
-        <div>
-          <span className="icon"></span>
-          <p className="text-sm">Tue, Dec 19, 2023 / 12:25PM - 12:25PM</p>
+        <div className="flex flex-1 flex-col gap-8 px-1 sm:p-10">
+          <Details event={event} />
+        </div>
+
+        {/* EVENTS WITH THE SAME CATEGORY */}
+        <div className="my-8">
+          <h2 className="mb-8 md:mb-12">Related Events</h2>
+          <Suspense fallback={<FallbackLoader />}>
+            <Collection
+              data={relatedEvents?.data}
+              emptyTitle="No Events Found"
+              emptySubText="Come back later"
+              collectionType="All_Events"
+              limit={6}
+              page={1}
+              totalPages={relatedEvents?.totalPages}
+            />
+          </Suspense>
         </div>
       </div>
     </div>
   );
 }
 
-export default Events;
+export default EventDetails;

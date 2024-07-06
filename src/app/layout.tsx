@@ -28,7 +28,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={raleway.variable}>
           <NextTopLoader />
-          <div className="mx-auto w-full max-w-7xl">{children}</div>
+          <div className="wrapper mx-auto w-full max-w-7xl">{children}</div>
         </body>
       </html>
     </ClerkProvider>

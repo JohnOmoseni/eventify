@@ -1,3 +1,5 @@
+import { IEvent } from "@/server/database/models/event.model";
+
 export const URLS = {
   // auth
   signup: "/sign-up",

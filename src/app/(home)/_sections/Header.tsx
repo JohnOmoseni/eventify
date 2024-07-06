@@ -46,10 +46,7 @@ const Header = ({ setOpenMenu }: HeaderProps) => {
           </SignedIn>
           <SignedOut>
             <Link href={URLS.signin}>
-              <Button
-                title="Login"
-                className="bg-transparent py-2 text-foreground"
-              />
+              <Button title="Login" className="max-sm:py-1" />
             </Link>
           </SignedOut>
           <div

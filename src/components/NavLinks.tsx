@@ -1,7 +1,9 @@
 import { animateFn, linksAni } from "@/lib/animate";
 import { NavLinkProps } from "@/types";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
@@ -18,7 +20,9 @@ function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
   };
 
   return (
-    <motion.p
+    <WrapperComponent
+      menu={menu}
+      href={href}
       {...(menu && animateFn(linksAni, idx))}
       onClick={() => onClick(tag)}
     >
@@ -31,8 +35,32 @@ function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
       >
         {name}
       </motion.span>
-    </motion.p>
+    </WrapperComponent>
   );
 }
 
 export default NavLinks;
+
+const WrapperComponent = ({
+  menu,
+  href,
+  children,
+  onClick,
+  ...rest
+}: {
+  menu?: boolean;
+  href: string;
+  children: ReactNode;
+  onClick: () => void;
+  [key: string]: any;
+}) => {
+  return menu ? (
+    <motion.p onClick={onClick} {...rest}>
+      {children}
+    </motion.p>
+  ) : (
+    <Link href={href} {...rest}>
+      {children}
+    </Link>
+  );
+};

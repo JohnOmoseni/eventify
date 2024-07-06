@@ -17,10 +17,10 @@ export const eventFormSchema = yup.object().shape({
     .max(400, "Location must be less than 400 characters")
     .required("Field is required"),
   imageUrl: yup.string().required("Field is required"),
-  categoryId: yup.string(),
   startDateTime: yup.date().default(() => new Date()),
-  endDateTime: yup.date(),
-  price: yup.string(),
+  endDateTime: yup.date().default(() => new Date()),
+  categoryId: yup.string().default(""),
+  price: yup.string().default(""),
   isFree: yup.boolean().default(false),
-  url: yup.string().url("Must be a valid URL"),
+  url: yup.string().url("Must be a valid URL").default(""),
 });
