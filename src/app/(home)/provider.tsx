@@ -14,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const persistor = persistStore(store);
+const queryClient = new QueryClient();
 
 export default function ProviderWrapper({
   children,
@@ -21,7 +22,6 @@ export default function ProviderWrapper({
   children: React.ReactNode;
 }>) {
   const [openMenu, setOpenMenu] = useState(false);
-  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>

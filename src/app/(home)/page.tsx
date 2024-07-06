@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import { getAllEvents } from "@/server/actions/event.actions";
 import Hero from "./_sections/Hero";
 import Collection from "./_sections/Collection";
-import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 
 export default async function Home() {
   const events = await getAllEvents({

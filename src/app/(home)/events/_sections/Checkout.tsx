@@ -5,7 +5,7 @@ import { IEvent } from "@/server/database/models/event.model";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 
-loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+// loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 function Checkout({ event, userId }: { event: IEvent; userId: string }) {
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
