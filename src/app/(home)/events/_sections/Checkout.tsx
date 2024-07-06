@@ -37,13 +37,14 @@ function Checkout({ event, userId }: { event: IEvent; userId: string }) {
   };
 
   return (
-    <form action={onCheckout} method="POST">
-      <Button
-        type="submit"
-        title={label}
-        className="mt-3 w-fit px-6 py-2 sm:mt-5"
-      />
-    </form>
+    <div></div>
+    // <form action={onCheckout} method="POST">
+    //   <Button
+    //     type="submit"
+    //     title={label}
+    //     className="mt-3 w-fit px-6 py-2 sm:mt-5"
+    //   />
+    // </form>
   );
 }
 

@@ -1,19 +1,23 @@
-import { getAllEvents } from "@/server/actions/event.actions";
+// import { getAllEvents } from "@/server/actions/event.actions";
 import Hero from "./_sections/Hero";
 import Collection from "./_sections/Collection";
 
 export default async function Home() {
-  const events = await getAllEvents({
-    query: "",
-    page: 1,
-    category: "",
-    limit: 6,
-  });
+  // const events = await getAllEvents({
+  //   query: "",
+  //   page: 1,
+  //   category: "",
+  //   limit: 6,
+  // });
 
-  console.log(events);
+  // console.log(events);
+  const events = {
+    data: [],
+    totalPages: 1,
+  };
 
   return (
-    <main>
+    <>
       <Hero />
 
       <Collection
@@ -25,6 +29,6 @@ export default async function Home() {
         page={1}
         totalPages={events?.totalPages}
       />
-    </main>
+    </>
   );
 }

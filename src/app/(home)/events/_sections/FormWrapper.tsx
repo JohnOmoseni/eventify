@@ -27,7 +27,7 @@ function FormWrapper({
         <h3 className="text-center text-xl">{title}</h3>
 
         <div className="mb-4 mt-6 rounded-xl px-4 py-6 shadow-md sm:mt-10 sm:px-6">
-          <form action="" onSubmit={onSubmit} className="flex-column gap-4">
+          <form onSubmit={onSubmit} className="flex-column gap-4">
             {children}
 
             <Button

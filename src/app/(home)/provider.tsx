@@ -31,7 +31,7 @@ export default function ProviderWrapper({
           <AnimatePresence>
             {openMenu && <Menu setOpenMenu={setOpenMenu} />}
           </AnimatePresence>
-          {children}
+          <main className="flex-1">{children}</main>
           <Footer />
         </PersistGate>
       </Provider>

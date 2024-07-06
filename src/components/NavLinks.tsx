@@ -13,19 +13,8 @@ function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  const onClick = (tag: string) => {
-    handleClick && handleClick();
-    const element = document.getElementById(tag);
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <WrapperComponent
-      menu={menu}
-      href={href}
-      {...(menu && animateFn(linksAni, idx))}
-      onClick={() => onClick(tag)}
-    >
+    <Link href={href} {...(menu && animateFn(linksAni, idx))}>
       <motion.span
         className={twMerge(
           "cursor-pointer capitalize transition-colors transition-sm hover:font-medium hover:text-secondary",
@@ -35,7 +24,7 @@ function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
       >
         {name}
       </motion.span>
-    </WrapperComponent>
+    </Link>
   );
 }
 

@@ -57,7 +57,7 @@ export function FileUploader({
             <Upload size={70} />
           </span>
 
-          <h3 className="my-2">
+          <h3 className="my-2 px-2 text-center">
             {isDragActive
               ? "Drag the photos here...."
               : " Drag and drop here or click to select the photos"}
