@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { createCategory } from "@/server/actions/category.action";
 import { ICategory } from "@/server/database/models/category.model";
-import { Dispatch, SetStateAction, startTransition, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import InputField from "@/components/InputField";
 
 const AddNewCategory = ({
@@ -32,7 +32,6 @@ const AddNewCategory = ({
       setCategories((prev) => [...prev, category]);
       setNewCategory("");
       setOpenModal(false);
-      console.log("added new category:", newCategory);
     }
   };
   return (
@@ -46,13 +45,13 @@ const AddNewCategory = ({
         <Button
           title="Cancel"
           onClick={() => setOpenModal(false)}
-          className="btn-variant w-full"
+          className="btn-variant w-full hover:scale-95"
         />
         <Button
           title="Add Category"
           disabled={isLoading}
           onClick={() => handleAddCatergory()}
-          className="w-full py-2"
+          className="w-full py-2 hover:scale-95"
         />
       </div>
     </>

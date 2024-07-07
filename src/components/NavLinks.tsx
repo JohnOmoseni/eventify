@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
+function NavLinks({ name, href, menu, idx, setOpenMenu }: NavLinkProps) {
   const navlink = "relative p-1 text-base tracking-snug whitespace-nowrap ";
   const menulink = "";
 
@@ -14,7 +14,11 @@ function NavLinks({ name, tag, href, menu, idx, handleClick }: NavLinkProps) {
   const isActive = pathname === href;
 
   return (
-    <Link href={href} {...(menu && animateFn(linksAni, idx))}>
+    <Link
+      href={href}
+      {...(menu && animateFn(linksAni, idx))}
+      onClick={() => setOpenMenu()}
+    >
       <motion.span
         className={twMerge(
           "cursor-pointer capitalize transition-colors transition-sm hover:font-medium hover:text-secondary",

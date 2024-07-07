@@ -1,11 +1,9 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
-
 import EventForm from "../_sections/EventForm";
 
 async function CreateEvent() {
   // customize your session token
   const { userId }: { userId: string | null } = auth();
-  const user = await currentUser();
 
   console.log("UserID:", userId);
 
