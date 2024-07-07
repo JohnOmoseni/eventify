@@ -35,13 +35,13 @@ export default function Modal({
 
             <div
               style={{
-                top: "50%",
-                left: "50%",
                 transform: "translate(-50%, -50%)",
+                zIndex: 999,
               }}
-              className="fixed grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
+              className="fixed left-1/2 top-1/2 grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
             >
               <DialogPanel
+
               // as={motion.div}
               // initial={{ opacity: 0, scale: 0.95 }}
               // animate={{ opacity: 1, scale: 1 }}
