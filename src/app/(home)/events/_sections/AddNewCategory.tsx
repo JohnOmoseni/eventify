@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/Button";
 import { createCategory } from "@/server/actions/category.action";
 import { ICategory } from "@/server/database/models/category.model";
@@ -53,7 +51,7 @@ const AddNewCategory = ({
         <Button
           title="Add Category"
           disabled={isLoading}
-          onClick={() => startTransition(handleAddCatergory)}
+          onClick={() => handleAddCatergory()}
           className="w-full py-2"
         />
       </div>

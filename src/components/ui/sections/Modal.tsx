@@ -24,29 +24,28 @@ export default function Modal({
 
       <AnimatePresence>
         {openModal && (
-          <Dialog static open={openModal} onClose={() => setOpenModal(false)}>
+          <Dialog open={openModal} onClose={() => null}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              style={{ zIndex: 99 }}
+              style={{ zIndex: 998 }}
               className="fixed inset-0 bg-black/30 backdrop-blur-md"
             />
 
             <div
               style={{
-                zIndex: 999,
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
               }}
-              className="fixed left-[50%] top-[50%] grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
+              className="fixed grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
             >
               <DialogPanel
-                as={motion.div}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+              // as={motion.div}
+              // initial={{ opacity: 0, scale: 0.95 }}
+              // animate={{ opacity: 1, scale: 1 }}
+              // exit={{ opacity: 0, scale: 0.95 }}
               >
                 <span
                   className="icon absolute right-3 top-3 text-foreground transition-colors active:scale-95"

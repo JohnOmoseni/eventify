@@ -35,13 +35,15 @@ export const Button = ({
       )}
     >
       {disabled && (
-        <ClipLoader
-          color={"white"}
-          loading={disabled}
-          size={25}
-          aria-label="Loading"
-          data-testid="loader"
-        />
+        <span className="row-flex mr-1.5">
+          <ClipLoader
+            color={"white"}
+            loading={disabled}
+            size={20}
+            aria-label="Loading"
+            data-testid="loader"
+          />
+        </span>
       )}
       {dir === "left" && Icon && !disabled && (
         <Icon size={20} className="mt-0.5 font-semibold" />
