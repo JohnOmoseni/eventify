@@ -17,7 +17,7 @@ function NavLinks({ name, href, menu, idx, setOpenMenu }: NavLinkProps) {
     <Link
       href={href}
       {...(menu && animateFn(linksAni, idx))}
-      onClick={() => setOpenMenu()}
+      onClick={() => setOpenMenu && setOpenMenu()}
     >
       <motion.span
         className={twMerge(

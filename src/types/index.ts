@@ -6,7 +6,7 @@ export type NavLinkProps = {
   href: string;
   idx?: number;
   menu?: boolean;
-  setOpenMenu: () => void;
+  setOpenMenu?: () => void;
 };
 
 export type EventFormProps = {
