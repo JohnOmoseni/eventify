@@ -27,14 +27,11 @@ import DateTime from "./DateTime";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-async function EventForm({ event, eventId, userId, type }: EventFormProps) {
+function EventForm({ event, eventId, userId, type }: EventFormProps) {
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-  const [categories, setCategories] = useState<ICategory[]>([
-    { name: "hello" },
-    { name: "world" },
-  ]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const initialValues =
     event && type === "Update"
       ? {
@@ -48,14 +45,15 @@ async function EventForm({ event, eventId, userId, type }: EventFormProps) {
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
 
-  // const { data: categoryList, isLoading: fetchingCategoryList } = useQuery({
-  //   queryKey: ["categories"],
-  //   queryFn: () => getAllCategories(),
-  // });
+  const { data: categoryList } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getAllCategories(),
+  });
 
-  // useEffect(() => {
-  //   if (categoryList) setCategories(categoryList as ICategory[]);
-  // }, [categoryList]);
+  useEffect(() => {
+    console.log(categoryList);
+    if (categoryList) setCategories(categoryList as ICategory[]);
+  }, [categoryList]);
 
   const onSubmit = async (
     values: InferType<typeof eventFormSchema>,
@@ -86,6 +84,8 @@ async function EventForm({ event, eventId, userId, type }: EventFormProps) {
 
           router.push(`/events/${newEvent._id}`);
         }
+
+        console.log(newEvent);
       } catch (error) {
         handleApiError(error);
       }
@@ -150,7 +150,6 @@ async function EventForm({ event, eventId, userId, type }: EventFormProps) {
         <SelectDropdown
           value={values.categoryId}
           items={categories}
-          // isFetchingList={fetchingCategoryList}
           setValue={(value) => {
             handleChange({
               target: {

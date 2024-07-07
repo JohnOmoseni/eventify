@@ -2,6 +2,7 @@
 
 import { IconType } from "react-icons/lib";
 import { twMerge } from "tailwind-merge";
+import ClipLoader from "react-spinners/ClipLoader";
 
 type BtnProps = {
   title: string;
@@ -33,7 +34,16 @@ export const Button = ({
         className,
       )}
     >
-      {dir === "left" && Icon && (
+      {disabled && (
+        <ClipLoader
+          color={"white"}
+          loading={disabled}
+          size={25}
+          aria-label="Loading"
+          data-testid="loader"
+        />
+      )}
+      {dir === "left" && Icon && !disabled && (
         <Icon size={20} className="mt-0.5 font-semibold" />
       )}
       {title}

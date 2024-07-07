@@ -5,6 +5,7 @@ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { IEvent } from "@/server/database/models/event.model";
 import { v4 as uuid } from "uuid";
 import { handleApiError } from "@/lib/utils";
+import { User } from "@clerk/nextjs/server";
 
 function TestCheckout({
   event,
@@ -13,7 +14,7 @@ function TestCheckout({
 }: {
   event: IEvent;
   userId: string;
-  user: any;
+  user: User | null;
 }) {
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
   const price = event.isFree ? 0 : Number(event.price);
@@ -33,9 +34,9 @@ function TestCheckout({
     payment_options: "card,mobilemoney,ussd",
     redirect_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
     customer: {
-      email: user?.email,
-      name: user?.username,
-      phone_number: "",
+      email: user?.emailAddresses[0].emailAddress as string,
+      name: user?.username || `${user?.firstName} ${user?.lastName}`,
+      phone_number: user?.phoneNumbers[0].phoneNumber as string,
     },
     meta: { eventId: order.eventId, buyerId: order.buyerId },
     customizations: {

@@ -33,23 +33,23 @@ export default function Modal({
               className="fixed inset-0 bg-black/30 backdrop-blur-md"
             />
 
-            <motion.div
-              // as={motion.div}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              style={{ zIndex: 999, transform: "translate(-50%, -50%)" }}
-              className="fixed grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
+            <div
+              style={{
+                zIndex: 999,
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              className="fixed left-[50%] top-[50%] grid max-h-[360px] min-h-[200px] min-w-[300px] max-w-lg items-center overflow-y-auto rounded-lg bg-background px-4 py-4 text-foreground shadow-sm sm:px-6"
             >
               <DialogPanel
-
-              // as={motion.div}
-              // initial={{ opacity: 0, scale: 0.95 }}
-              // animate={{ opacity: 1, scale: 1 }}
-              // exit={{ opacity: 0, scale: 0.95 }}
+                as={motion.div}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
               >
                 <span
-                  className="absolute right-3 top-3 cursor-pointer text-foreground transition-colors active:scale-95"
+                  className="icon absolute right-3 top-3 text-foreground transition-colors active:scale-95"
                   onClick={() => setOpenModal(false)}
                   title="close"
                 >
@@ -63,7 +63,7 @@ export default function Modal({
                   {dialogContent && dialogContent}
                 </div>
               </DialogPanel>
-            </motion.div>
+            </div>
           </Dialog>
         )}
       </AnimatePresence>

@@ -1,20 +1,17 @@
-// import { getAllEvents } from "@/server/actions/event.actions";
+import { getAllEvents } from "@/server/actions/event.actions";
 import Hero from "./_sections/Hero";
 import Collection from "./_sections/Collection";
+// import { Suspense } from "react";
 
 export default async function Home() {
-  // const events = await getAllEvents({
-  //   query: "",
-  //   page: 1,
-  //   category: "",
-  //   limit: 6,
-  // });
+  const events = await getAllEvents({
+    query: "",
+    page: 1,
+    category: "",
+    limit: 6,
+  });
 
-  // console.log(events);
-  const events = {
-    data: [],
-    totalPages: 1,
-  };
+  console.log(events);
 
   return (
     <>

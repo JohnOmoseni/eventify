@@ -38,6 +38,8 @@ export const createEvent = async ({
   try {
     await connectToDatabase();
 
+    console.log("running create event on backend");
+
     // find the organizer of this event
     const organizer = await User.findById(userId);
     if (!organizer) throw new Error("Organizer not found");

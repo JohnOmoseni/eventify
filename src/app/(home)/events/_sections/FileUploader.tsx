@@ -4,6 +4,8 @@ import { useCallback, Dispatch, SetStateAction } from "react";
 import { useDropzone } from "@uploadthing/react/hooks";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
+import { useUploadThing } from "@/utils/uploadthing";
+
 import { convertFileToUrl } from "@/lib/utils";
 import { Button } from "@/components/Button";
 import { Upload } from "@/constants/icons";
@@ -48,7 +50,7 @@ export function FileUploader({
             alt="image"
             width={250}
             height={250}
-            className="w-full object-cover object-center"
+            className="max-h-[350px] w-full object-cover object-center"
           />
         </div>
       ) : (
