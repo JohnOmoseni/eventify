@@ -21,7 +21,7 @@ function Menu({ setOpenMenu }: Props) {
     >
       <motion.div
         {...animateFn(slideinVariant)}
-        className="menu flex-column absolute right-0 top-0 isolate h-full w-[80%] max-w-[500px] overflow-hidden bg-background px-[4%] text-foreground backdrop-blur-sm"
+        className="menu flex-column fixed right-0 top-0 isolate h-dvh w-[80%] max-w-[500px] overflow-hidden bg-background px-[4%] text-foreground backdrop-blur-sm"
         onClick={(e) => e.stopPropagation()}
       >
         <span

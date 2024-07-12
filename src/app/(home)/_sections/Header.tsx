@@ -28,6 +28,7 @@ const Header = ({ setOpenMenu }: HeaderProps) => {
             alt="eventify"
             width={100}
             height={38}
+            priority
             className="object-contain"
           />
         </Link>

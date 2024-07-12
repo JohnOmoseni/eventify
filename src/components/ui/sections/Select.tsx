@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface SelectDropdownProps {
@@ -13,10 +13,9 @@ interface SelectDropdownProps {
   items: any[];
   isFetchingList?: boolean;
   placeholder?: ReactNode;
-  setValue: Dispatch<SetStateAction<any>>;
-  itemStyle?: string;
+  itemContainerStyle?: string;
+  setValue: (value: string) => void;
   renderItem?: (item: any) => ReactNode;
-  otherContent?: () => ReactNode;
 }
 
 // defaultValue={value || items?.[0]}
@@ -24,15 +23,14 @@ interface SelectDropdownProps {
 export default function SelectDropdown({
   value,
   placeholder,
-  itemStyle,
+  itemContainerStyle,
   items,
   isFetchingList,
   setValue,
   renderItem,
-  otherContent,
 }: SelectDropdownProps) {
   return (
-    <Select onValueChange={setValue}>
+    <Select onValueChange={setValue} value={value}>
       <SelectTrigger className="w-full min-w-[180px]">
         <SelectValue placeholder={placeholder ?? "Select"} />
       </SelectTrigger>
@@ -48,14 +46,12 @@ export default function SelectDropdown({
             <SelectItem
               value={item?.name}
               key={idx}
-              className={twMerge("row-flex !justify-start", itemStyle)}
+              className={twMerge("row-flex !justify-start", itemContainerStyle)}
             >
               {renderItem ? renderItem(item?.name) : item?.name}
             </SelectItem>
           ))
         )}
-
-        {otherContent && otherContent()}
       </SelectContent>
     </Select>
   );

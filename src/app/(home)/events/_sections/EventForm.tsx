@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { eventDefaultValues } from "@/constants";
 import { eventFormSchema } from "@/schema";
 import { handleApiError } from "@/lib/utils";
@@ -8,11 +8,8 @@ import { InferType } from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
-import { useQuery } from "@tanstack/react-query";
-import { ICategory } from "@/server/database/models/category.model";
 import { EventFormProps } from "@/types";
 import { FileUploader } from "./FileUploader";
-import { getAllCategories } from "@/server/actions/category.action";
 import { useUploadThing } from "@/utils/uploadthing";
 import { createEvent, updateEvent } from "@/server/actions/event.actions";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,18 +17,13 @@ import { Location, DollarSign, LinkIcon } from "@/constants/icons";
 import FormGroup from "../_sections/FormGroup";
 import InputField from "@/components/InputField";
 import FormWrapper from "../_sections/FormWrapper";
-import Modal from "@/components/ui/sections/Modal";
-import SelectDropdown from "@/components/ui/sections/Select";
-import AddNewCategory from "./AddNewCategory";
 import DateTime from "./DateTime";
+import NewCategory from "./NewCategory";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 function EventForm({ event, eventId, userId, type }: EventFormProps) {
-  const [openModal, setOpenModal] = useState(false);
-  const [newCategory, setNewCategory] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-  const [categories, setCategories] = useState<ICategory[]>([]);
   const initialValues =
     event && type === "Update"
       ? {
@@ -44,16 +36,6 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
 
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
-
-  const { data: categoryList } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getAllCategories(),
-  });
-
-  useEffect(() => {
-    console.log(categoryList);
-    if (categoryList) setCategories(categoryList as ICategory[]);
-  }, [categoryList]);
 
   const onSubmit = async (
     values: InferType<typeof eventFormSchema>,
@@ -147,10 +129,9 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
       </FormGroup>
 
       <FormGroup name="categoryId" errors={errors} touched={touched}>
-        <SelectDropdown
+        <NewCategory
           value={values.categoryId}
-          items={categories}
-          setValue={(value) => {
+          onChangeHandler={(value) => {
             handleChange({
               target: {
                 name: "categoryId",
@@ -158,27 +139,6 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
               },
             });
           }}
-          placeholder="Choose Category"
-          otherContent={() => (
-            <Modal
-              title="New Category"
-              trigger={
-                <span className="relative flex cursor-pointer select-none items-center py-1.5 text-sm focus:text-foreground">
-                  Add new Category
-                </span>
-              }
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-              dialogContent={
-                <AddNewCategory
-                  newCategory={newCategory}
-                  setNewCategory={setNewCategory}
-                  setOpenModal={setOpenModal}
-                  setCategories={setCategories}
-                />
-              }
-            />
-          )}
         />
       </FormGroup>
 

@@ -102,6 +102,9 @@
   .badge {
     @apply line-clamp-1 inline-flex w-min items-center rounded-full px-3 py-1 text-sm font-semibold capitalize transition-colors focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1;
   }
+  .btn {
+    @apply row-flex rounded-full bg-secondary px-7 py-2.5 text-base capitalize leading-6 text-background transition-sm hover:scale-105;
+  }
   .btn-variant {
     @apply border border-secondary bg-transparent py-2 text-foreground;
   }

@@ -16,7 +16,7 @@ interface InputFieldProps {
   placeholder?: string;
   icon?: IconType;
   render?: () => ReactNode;
-  className?: string;
+  containerClassName?: string;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -31,6 +31,7 @@ function InputField({
   icon: Icon,
   render,
   onKeyDown,
+  containerClassName,
   onChange,
   onBlur,
 }: InputFieldProps) {
@@ -38,6 +39,7 @@ function InputField({
     <div
       className={twMerge(
         "row-flex relative w-full !justify-start gap-1 rounded-md border border-input shadow-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 group-[.is-error]:border-none",
+        containerClassName,
       )}
     >
       {dir === "left" && Icon && (

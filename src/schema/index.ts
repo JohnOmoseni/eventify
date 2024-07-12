@@ -8,14 +8,8 @@ export const eventFormSchema = yup.object().shape({
     .trim(),
   description: yup
     .string()
-    .min(3, "Description must be at least 3 characters")
-    .max(400, "Description must be less than 400 characters")
-    .required("Field is required"),
-  location: yup
-    .string()
-    .min(3, "Location must be at least 3 characters")
-    .max(400, "Location must be less than 400 characters")
-    .required("Field is required"),
+    .max(400, "Description must be less than 400 characters"),
+  location: yup.string().max(400, "Location must be less than 400 characters"),
   imageUrl: yup.string().required("Field is required"),
   startDateTime: yup.date().default(() => new Date()),
   endDateTime: yup.date().default(() => new Date()),
