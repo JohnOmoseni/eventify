@@ -47,6 +47,8 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
     let uploadedImageUrl = values?.imageUrl;
     if (files.length > 0) {
       const uploadedImages = await startUpload(files);
+
+      console.log("uploadedImages: " + uploadedImages);
       if (!uploadedImages) return;
 
       uploadedImageUrl = uploadedImages[0].url;

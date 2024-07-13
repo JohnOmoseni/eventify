@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import "./index.css";
 import "./utilities.css";
+
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -27,6 +31,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={raleway.variable}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <NextTopLoader />
           <div className="wrapper mx-auto w-full max-w-7xl">{children}</div>
         </body>

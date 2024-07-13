@@ -23,7 +23,7 @@ export function FileUploader({
   setFiles,
 }: FileUploaderProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles, imageUrl, convertFileToUrl(acceptedFiles[0]));
+    console.log(imageUrl, convertFileToUrl(acceptedFiles[0]));
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));
   }, []);

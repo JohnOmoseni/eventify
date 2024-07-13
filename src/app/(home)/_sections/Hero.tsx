@@ -19,7 +19,7 @@ function Hero() {
         />
 
         <Link
-          href={URLS.signup}
+          href={URLS.createEvent}
           className="row-flex mt-12 md:mt-16 md:!justify-start"
         >
           <Button title="Explore now" className="px-10 py-3.5 text-lg" />
