@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowBack } from "@/constants/icons";
 import { useRouter } from "next/navigation";
-import { IoIosArrowBack } from "react-icons/io";
 
 function BackArrow({
   onHandleGoBack,
@@ -15,7 +15,7 @@ function BackArrow({
       className="row-flex mt-6 cursor-pointer gap-1.5"
       onClick={() => (onHandleGoBack ? onHandleGoBack() : router.back())}
     >
-      <IoIosArrowBack size={22} className="icon icon-bg" />
+      <ArrowBack size={22} className="icon icon-bg" />
       <p className="mt-0.5 text-base capitalize transition-sm hover:underline">
         Back
       </p>

@@ -40,7 +40,7 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
         </div>
       )}
 
-      <div className="flex-column h-full w-full gap-3 px-4 pb-4 pt-5">
+      <div className="flex-column h-full w-full gap-2 px-3 py-5 pb-4">
         <div className="row-flex-btwn w-full gap-3">
           {!hidePrice && (
             <div className="row-flex-start gap-2">

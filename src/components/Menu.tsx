@@ -1,11 +1,11 @@
 "use client";
 
-import { IoClose } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { navLinks } from "@/constants";
 import { Dispatch, SetStateAction } from "react";
 import { animateFn, revealMenu, slideinVariant } from "@/lib/animate";
 import NavLinks from "./NavLinks";
+import { Close } from "@/constants/icons";
 
 type Props = {
   setOpenMenu: Dispatch<SetStateAction<boolean>>;
@@ -29,7 +29,7 @@ function Menu({ setOpenMenu }: Props) {
           onClick={() => setOpenMenu(false)}
           title="close-menu"
         >
-          <IoClose size="25" className="" fill="#333" />
+          <Close size="25" className="" fill="#333" />
         </span>
 
         <nav className="flex-column mx-auto flex-1 gap-8 pt-[10%] text-xl">

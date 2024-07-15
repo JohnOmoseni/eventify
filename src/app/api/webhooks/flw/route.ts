@@ -21,7 +21,11 @@ export async function POST(request: Request) {
   console.log(payload);
 
   // Send an immediate 200 response
-  const response = NextResponse.json({ message: "OK" }, { status: 200 });
+  const response = NextResponse.json("", { status: 200 });
+
+  // Do something (that doesn't take too long) with the payload
+  const eventType = payload?.event;
+  const data = payload?.data;
 
   // const verifyTxn = await flw.Transaction.verify({ id: payload.id });
 
@@ -30,10 +34,6 @@ export async function POST(request: Request) {
   //   console.error("Payment verification failed");
   //   return response;
   // }
-
-  // Do something (that doesn't take too long) with the payload
-  const eventType = payload?.event;
-  const data = payload?.data;
 
   // Perform long-running tasks asynchronously
   setTimeout(async () => {
@@ -47,19 +47,20 @@ export async function POST(request: Request) {
 
       const order = {
         flwId: id,
-        eventId: meta?.eventId,
-        buyerId: meta?.buyerId,
+        eventId: meta?.eventId || "",
+        buyerId: meta?.buyerId || "",
         totalAmount: chargedAmount.toString(),
         paymentType: payment_type,
         status,
         createdAt: new Date(),
       };
 
-      console.log(order);
+      console.log(order, data);
       try {
         const newOrder = await createOrderFlw(order);
 
         console.log("Order created successfully:", newOrder);
+        return NextResponse.json({ message: "OK", order: newOrder });
       } catch (error) {
         handleApiError(error);
       }

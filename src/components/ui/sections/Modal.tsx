@@ -1,7 +1,7 @@
+import { Close } from "@/constants/icons";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { AnimatePresence } from "framer-motion";
 import { ReactNode } from "react";
-import { IoClose } from "react-icons/io5";
 
 type ModalProps = {
   trigger: ReactNode;
@@ -45,7 +45,7 @@ export default function Modal({
                 onClick={() => setOpenModal(false)}
                 title="close"
               >
-                <IoClose size="20" fill="#111" />
+                <Close size="20" fill="#111" />
               </span>
               <div className="">
                 <DialogTitle className="my-3 text-center text-2xl capitalize">

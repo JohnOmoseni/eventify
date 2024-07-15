@@ -5,11 +5,11 @@ import Image from "next/image";
 import { Button } from "@/components/Button";
 import { Dispatch, SetStateAction } from "react";
 import { URLS, navLinks } from "@/constants";
-import { HiOutlineMenuAlt4 } from "react-icons/hi";
 
 import logo from "@/images/logo.svg";
 import NavLinks from "@/components/NavLinks";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { MenuIcon } from "@/constants/icons";
 
 type HeaderProps = {
   setOpenMenu?: Dispatch<SetStateAction<boolean>>;
@@ -54,7 +54,7 @@ const Header = ({ setOpenMenu }: HeaderProps) => {
             className="icon cursor-pointer sm:!hidden"
             onClick={() => setOpenMenu && setOpenMenu(true)}
           >
-            <HiOutlineMenuAlt4 size={22} className="" color="#333" />
+            <MenuIcon size={22} className="" color="#333" />
           </div>
         </div>
       </div>
