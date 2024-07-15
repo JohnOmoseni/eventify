@@ -1,10 +1,9 @@
 import { createOrderFlw } from "@/server/actions/order.action";
 import { NextResponse } from "next/server";
 import Flutterwave from "flutterwave-node-v3";
-import { handleApiError } from "@/utils";
 
 const flw = new Flutterwave(
-  process.env.FLW_PUBLIC_KEY,
+  process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
   process.env.FLW_SECRET_KEY,
 );
 

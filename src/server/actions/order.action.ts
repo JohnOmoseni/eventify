@@ -56,9 +56,9 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
 
     if (response.data?.status === "success") {
       redirect(response.data?.data?.link);
+    } else {
+      redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/`);
     }
-
-    // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/`);
   } catch (err) {
     handleApiError(err);
   }

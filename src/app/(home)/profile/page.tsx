@@ -5,26 +5,28 @@ import { getEventsByUser } from "@/server/actions/event.actions";
 import Link from "next/link";
 import Collection from "../_sections/Collection";
 import FallbackLoader from "@/components/fallbacks/FallbackLoader";
+import { getOrdersByUser } from "@/server/actions/order.action";
+import { SearchParamProps } from "@/types/actionTypes";
+import { IOrder } from "@/server/database/models/order.model";
 
-async function Profile() {
+async function Profile({ searchParams }: SearchParamProps) {
   // customize your session token
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  // // events organized by user
-  // const events = await getEventsByUser({
-  //   userId: userId!,
-  //   limit: 10,
-  //   page: 1,
-  // });
+  const ordersPage = Number(searchParams?.ordersPage) || 1;
+  const eventsPage = Number(searchParams?.eventsPage) || 1;
 
-  const events = { data: [] };
+  const orders = await getOrdersByUser({ userId, page: ordersPage });
+  const organizedEvents = await getEventsByUser({ userId, page: eventsPage });
+
+  const orderedEvents = orders?.data.map((order: IOrder) => order.event) || [];
 
   return (
     <>
       <div className="flex-column gap-6">
-        <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
-          <h2 className="sm:text-left">My Tickets</h2>
+        <div className="row-flex w-full gap-4 py-6 sm:!justify-between md:py-12">
+          <h3 className="sm:text-left">My Tickets</h3>
           <Link href="/#events" className="">
             <Button
               title="Explore more Event"
@@ -33,24 +35,24 @@ async function Profile() {
           </Link>
         </div>
 
-        <section className="my-6 self-center">
+        <section className="w-full">
           <Suspense fallback={<FallbackLoader />}>
             <Collection
-              data={events?.data}
-              emptyTitle="No Events purchased yet"
+              data={orderedEvents}
+              emptyTitle="No event tickets purchased yet"
               emptySubText="No worries - plenty exciting events to explore..."
               collectionType="My_Events"
               limit={3}
-              page={1}
+              page={ordersPage}
               urlParamName="ordersPage"
-              totalPages={2}
+              totalPages={orders?.totalPages}
             />
           </Suspense>
         </section>
       </div>
 
       <div className="flex-column gap-6">
-        <div className="row-flex w-full gap-4 p-6 sm:!justify-between md:px-8 md:py-12">
+        <div className="row-flex w-full gap-4 py-6 sm:!justify-between md:py-12">
           <h3 className="sm:text-left">Events Organized</h3>
           <Link href="/events/create" className="">
             <Button
@@ -59,17 +61,17 @@ async function Profile() {
             />
           </Link>
         </div>
-        <section className="my-6 self-center">
+        <section className="w-full">
           <Suspense fallback={<FallbackLoader />}>
             <Collection
-              data={events?.data}
+              data={organizedEvents?.data}
               emptyTitle="No Events have been created yet"
               emptySubText="Go create some now..."
               collectionType="Events_Organized"
-              limit={6}
-              page={1}
+              limit={3}
+              page={eventsPage}
               urlParamName="eventsPage"
-              totalPages={2}
+              totalPages={organizedEvents?.totalPages}
             />
           </Suspense>
         </section>

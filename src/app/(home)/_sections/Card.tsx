@@ -72,7 +72,7 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
           <h3 className="line-clamp-2">{event?.title}</h3>
         </Link>
 
-        <div className="mt-auto">
+        <div className="row-flex-btwn mt-auto w-full gap-4">
           <p className="text-base font-medium leading-4 text-foreground-100">
             {event?.organizer.firstName} {event?.organizer.firstName}
           </p>
