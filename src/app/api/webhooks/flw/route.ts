@@ -36,36 +36,36 @@ export async function POST(request: Request) {
   // }
 
   // Perform long-running tasks asynchronously
-  setTimeout(async () => {
-    // Long-running tasks go here
-    console.log("Processing payload:", eventType, data);
+  // setTimeout(async () => {
+  // Long-running tasks go here
+  console.log("Processing payload:", eventType, data);
 
-    if (eventType === "charge.completed") {
-      const { flw_ref: id, amount, payment_type, meta, status } = data;
+  if (eventType === "charge.completed") {
+    const { flw_ref: id, amount, payment_type, meta, status } = data;
 
-      const chargedAmount = amount ? amount : 0;
+    const chargedAmount = amount ? amount : 0;
 
-      const order = {
-        flwId: id,
-        eventId: meta?.eventId || "",
-        buyerId: meta?.buyerId || "",
-        totalAmount: chargedAmount.toString(),
-        paymentType: payment_type,
-        status,
-        createdAt: new Date(),
-      };
+    const order = {
+      flwId: id,
+      eventId: meta?.eventId || "",
+      buyerId: meta?.buyerId || "",
+      totalAmount: chargedAmount.toString(),
+      paymentType: payment_type,
+      status,
+      createdAt: new Date(),
+    };
 
-      console.log(order, data);
-      try {
-        const newOrder = await createOrderFlw(order);
+    console.log(order, data);
+    try {
+      const newOrder = await createOrderFlw(order);
 
-        console.log("Order created successfully:", newOrder);
-        return NextResponse.json({ message: "OK", order: newOrder });
-      } catch (error) {
-        handleApiError(error);
-      }
+      console.log("Order created successfully:", newOrder);
+      return NextResponse.json({ message: "OK", order: newOrder });
+    } catch (error) {
+      handleApiError(error);
     }
-  }, 0);
+  }
+  // }, 0);
 
   return response;
 }

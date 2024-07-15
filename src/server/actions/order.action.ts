@@ -1,9 +1,7 @@
 "use server";
 
 import {
-  CheckoutOrderParams,
   CheckOutOrderParamsFlw,
-  CreateOrderParams,
   CreateOrderParamsFlw,
   GetOrdersByEventParams,
   GetOrdersByUserParams,
@@ -14,9 +12,8 @@ import { ObjectId } from "mongodb";
 import { v4 as uuid } from "uuid";
 
 import User from "../database/models/user.model";
-import Order from "../database/models/order.model";
+import Order, { IOrder } from "../database/models/order.model";
 import Event from "../database/models/event.model";
-import Stripe from "stripe";
 import axios from "axios";
 import { handleApiError } from "@/utils";
 
@@ -68,58 +65,7 @@ export const createOrderFlw = async (order: CreateOrderParamsFlw) => {
   try {
     await connectToDatabase();
 
-    const newOrder = await Order.create({
-      ...order,
-      event: order.eventId,
-      buyer: order.buyerId,
-    });
-
-    return JSON.parse(JSON.stringify(newOrder));
-  } catch (error) {
-    handleApiError(error);
-  }
-};
-
-export const checkoutOrder = async (order: CheckoutOrderParams) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-  // stripe takes in the price in cents
-  const price = order.isFree ? 0 : Number(order.price) * 100;
-
-  try {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: price,
-            product_data: {
-              name: order.eventTitle,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      metadata: {
-        eventId: order.eventId,
-        buyerId: order.buyerId,
-      },
-      mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
-    });
-
-    redirect(session.url!);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const createOrder = async (order: CreateOrderParams) => {
-  try {
-    await connectToDatabase();
-
-    const newOrder = await Order.create({
+    const newOrder: IOrder = await Order.create({
       ...order,
       event: order.eventId,
       buyer: order.buyerId,
@@ -227,6 +173,36 @@ export async function getOrdersByUser({
       data: JSON.parse(JSON.stringify(orders)),
       totalPages: Math.ceil(ordersCount / limit),
     };
+  } catch (error) {
+    handleApiError(error);
+  }
+}
+
+// GET ONE ORDER BY ID
+export async function getOrderById(orderId: string, userId: string) {
+  try {
+    await connectToDatabase();
+
+    // find the organizer of this event
+    const organizer = await User.findById(userId);
+    if (!organizer) throw new Error("Organizer not found");
+
+    const order = await Order.findById(orderId).populate({
+      path: "event",
+      model: Event,
+      select: "_id title imageUrl organizer",
+      populate: {
+        path: "organizer",
+        model: User,
+        select: "_id firstName lastName",
+      },
+    });
+
+    console.log("Order", order);
+
+    if (!order) throw new Error("Order not found");
+
+    return JSON.parse(JSON.stringify(order));
   } catch (error) {
     handleApiError(error);
   }

@@ -3,7 +3,6 @@
 import { Button } from "@/components/Button";
 import { checkoutOrderFlw } from "@/server/actions/order.action";
 import { IEvent } from "@/server/database/models/event.model";
-import { useEffect } from "react";
 
 function FlwCheckout({
   event,
@@ -16,20 +15,6 @@ function FlwCheckout({
 }) {
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
 
-  useEffect(() => {
-    // Check to see if this is a redirect back from FlwCheckout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-    }
-
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready.",
-      );
-    }
-  }, []);
-
   const onCheckoutFlw = async () => {
     const order = {
       eventTitle: event.title,
@@ -41,7 +26,7 @@ function FlwCheckout({
       eventLogo: event.imageUrl,
       user: {
         email: user?.emailAddresses[0].emailAddress as string,
-        name: user?.username || `${user.firstName} ${user?.lastName}`,
+        name: user?.username || `${user?.firstName} ${user?.lastName}`,
         phoneNumber: user?.phoneNumbers[0]?.phoneNumber as string,
       },
     };

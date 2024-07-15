@@ -5,12 +5,14 @@ const OrderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  stripeId: {
+  flwId: {
     type: String,
     required: true,
     unique: true,
   },
   totalAmount: String,
+  paymentType: String,
+  status: String,
   event: {
     type: Schema.Types.ObjectId,
     ref: "Event",
@@ -27,8 +29,10 @@ export default Order;
 
 export interface IOrder extends Document {
   createdAt: Date;
-  stripeId: string;
+  flwId: string;
   totalAmount: string;
+  status: string;
+  paymentType?: string;
   event: {
     _id: string;
     title: string;

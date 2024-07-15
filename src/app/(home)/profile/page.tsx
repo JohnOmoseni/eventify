@@ -9,6 +9,7 @@ import { getEventsByUser } from "@/server/actions/event.actions";
 import { getOrdersByUser } from "@/server/actions/order.action";
 import { SearchParamProps } from "@/types/actionTypes";
 import { IOrder } from "@/server/database/models/order.model";
+import FlwRedirect from "./FlwRedirect";
 
 async function Profile({ searchParams }: SearchParamProps) {
   // customize your session token
@@ -28,6 +29,8 @@ async function Profile({ searchParams }: SearchParamProps) {
       <div className="max-w-max">
         <BackArrow />
       </div>
+
+      <FlwRedirect />
 
       <div className="flex-column sm:px-4">
         <div className="row-flex w-full gap-4 py-8 sm:!justify-between md:py-12">

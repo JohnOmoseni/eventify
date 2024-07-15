@@ -104,14 +104,6 @@ export type CreateCategoryParams = {
 };
 
 // ====== ORDER PARAMS
-export type CheckoutOrderParams = {
-  eventTitle: string;
-  eventId: string;
-  price: string;
-  isFree: boolean;
-  buyerId: string;
-};
-
 export type CheckOutOrderParamsFlw = {
   eventTitle: string;
   eventDesc: string;
@@ -133,16 +125,7 @@ export type CreateOrderParamsFlw = {
   buyerId: string;
   status: string;
   totalAmount: string;
-  paymentType: string;
-  issuer?: string;
-  createdAt: Date;
-};
-
-export type CreateOrderParams = {
-  stripeId?: string;
-  eventId: string;
-  buyerId: string;
-  totalAmount: string;
+  paymentType?: string;
   createdAt: Date;
 };
 

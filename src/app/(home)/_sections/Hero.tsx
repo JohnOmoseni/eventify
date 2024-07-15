@@ -8,7 +8,7 @@ import TextGenerateEffect from "@/components/anims/TextGenerateEffect";
 function Hero() {
   return (
     <div className="hero relative isolate grid min-h-dvh grid-cols-1 items-center gap-16 pb-6 pt-10 md:grid-cols-2 md:gap-4 md:pt-0 lg:mt-[-3%]">
-      <div className="flex-1 max-md:px-3 md:pl-[min(4em,_10%)] md:pt-[6%]">
+      <div className="flex-1 max-md:px-3 md:pt-[6%]">
         <h1 className="relative max-md:text-center">
           Host, Connect, <br /> Celebrate: Your Events, <br /> Our Platform!
         </h1>
