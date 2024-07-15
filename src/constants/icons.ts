@@ -10,6 +10,8 @@ import { TbCurrencyNaira as Naira } from "react-icons/tb";
 import { FiSearch as SearchIcon } from "react-icons/fi";
 import { FaArrowTrendUp as ArrowUp } from "react-icons/fa6";
 import { GoTrash as Trash } from "react-icons/go";
+import { FiEdit as Edit } from "react-icons/fi";
+
 export {
   Location,
   Calendar,
@@ -21,4 +23,5 @@ export {
   SearchIcon,
   ArrowUp,
   Trash,
+  Edit,
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -10,7 +12,7 @@ function BackArrow({
 
   return (
     <div
-      className="row-flex cursor-pointer gap-1.5"
+      className="row-flex mt-6 cursor-pointer gap-1.5"
       onClick={() => (onHandleGoBack ? onHandleGoBack() : router.back())}
     >
       <IoIosArrowBack size={22} className="icon icon-bg" />

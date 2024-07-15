@@ -3,6 +3,7 @@ import { SearchParamProps } from "@/types/actionTypes";
 import { IOrderItem } from "@/server/database/models/order.model";
 import { formatDateTime, formatPrice } from "@/utils";
 import Search from "../_sections/Search";
+import BackArrow from "@/components/BackArrow";
 
 const Orders = async ({ searchParams }: SearchParamProps) => {
   const eventId = (searchParams?.eventId as string) || "";
@@ -12,6 +13,10 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
 
   return (
     <>
+      <div className="max-w-max">
+        <BackArrow />
+      </div>
+
       <section className="py-5 md:py-10">
         <h3 className="max-sm:text-center">Orders</h3>
       </section>

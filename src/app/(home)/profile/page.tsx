@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Collection from "../_sections/Collection";
+import BackArrow from "@/components/BackArrow";
 import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 import { Suspense } from "react";
 import { Button } from "@/components/Button";
@@ -24,6 +25,10 @@ async function Profile({ searchParams }: SearchParamProps) {
 
   return (
     <>
+      <div className="max-w-max">
+        <BackArrow />
+      </div>
+
       <div className="flex-column sm:px-4">
         <div className="row-flex w-full gap-4 py-8 sm:!justify-between md:py-12">
           <h3 className="sm:text-left">My Tickets</h3>

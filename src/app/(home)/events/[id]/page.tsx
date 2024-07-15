@@ -7,6 +7,7 @@ import Image from "next/image";
 import Details from "../_sections/Details";
 import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 import Collection from "../../_sections/Collection";
+import BackArrow from "@/components/BackArrow";
 
 type EventDetailsProps = {
   params: { id: string };
@@ -26,6 +27,9 @@ async function EventDetails({ params, searchParams }: EventDetailsProps) {
 
   return (
     <div className="pt-8">
+      <div className="max-w-max">
+        <BackArrow />
+      </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="relative overflow-hidden rounded-sm">
           <Image

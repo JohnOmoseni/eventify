@@ -2,7 +2,7 @@ import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { IEvent } from "@/server/database/models/event.model";
 import { auth } from "@clerk/nextjs/server";
-import { ArrowUp, Location } from "@/constants/icons";
+import { ArrowUp, Edit } from "@/constants/icons";
 import { formatDateTime } from "@/utils";
 import ConfirmDelete from "@/components/ConfirmDelete";
 
@@ -32,7 +32,7 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
         <div className="flex-column absolute right-2 top-2 !items-center gap-4 rounded-xl bg-background p-2 shadow-sm transition-sm">
           <Link href={`/events/${event?._id}/update`}>
             <span className="icon">
-              <Location size={20} />
+              <Edit size={20} />
             </span>
           </Link>
 
@@ -74,7 +74,7 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
 
         <div className="row-flex-btwn mt-auto w-full gap-4">
           <p className="text-base font-medium leading-4 text-foreground-100">
-            {event?.organizer.firstName} {event?.organizer?.lastName}
+            {event?.organizer?.firstName} {event?.organizer?.lastName}
           </p>
 
           {hasOrderLink && (

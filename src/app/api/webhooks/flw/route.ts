@@ -1,6 +1,6 @@
 import { createOrderFlw } from "@/server/actions/order.action";
 import { NextResponse } from "next/server";
-import Flutterwave from "flutterwave-node-v3";
+import { handleApiError } from "@/utils";
 
 // const flw = new Flutterwave(
 //   process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
@@ -35,8 +35,6 @@ export async function POST(request: Request) {
   const eventType = payload?.event;
   const data = payload?.data;
 
-  console.log(payload?.data);
-
   // Perform long-running tasks asynchronously
   setTimeout(async () => {
     // Long-running tasks go here
@@ -56,15 +54,14 @@ export async function POST(request: Request) {
         status,
         createdAt: new Date(),
       };
+
+      console.log(order);
       try {
         const newOrder = await createOrderFlw(order);
 
         console.log("Order created successfully:", newOrder);
       } catch (error) {
-        return NextResponse.json(
-          { message: "Internal Server Error" },
-          { status: 500 },
-        );
+        handleApiError(error);
       }
     }
   }, 0);
