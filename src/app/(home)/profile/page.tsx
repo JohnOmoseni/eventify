@@ -1,10 +1,10 @@
+import Link from "next/link";
+import Collection from "../_sections/Collection";
+import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 import { Suspense } from "react";
 import { Button } from "@/components/Button";
 import { auth } from "@clerk/nextjs/server";
 import { getEventsByUser } from "@/server/actions/event.actions";
-import Link from "next/link";
-import Collection from "../_sections/Collection";
-import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 import { getOrdersByUser } from "@/server/actions/order.action";
 import { SearchParamProps } from "@/types/actionTypes";
 import { IOrder } from "@/server/database/models/order.model";
@@ -24,8 +24,8 @@ async function Profile({ searchParams }: SearchParamProps) {
 
   return (
     <>
-      <div className="flex-column gap-6">
-        <div className="row-flex w-full gap-4 py-6 sm:!justify-between md:py-12">
+      <div className="flex-column sm:px-4">
+        <div className="row-flex w-full gap-4 py-8 sm:!justify-between md:py-12">
           <h3 className="sm:text-left">My Tickets</h3>
           <Link href="/#events" className="">
             <Button
@@ -51,8 +51,8 @@ async function Profile({ searchParams }: SearchParamProps) {
         </section>
       </div>
 
-      <div className="flex-column gap-6">
-        <div className="row-flex w-full gap-4 py-6 sm:!justify-between md:py-12">
+      <div className="flex-column sm:px-4">
+        <div className="row-flex w-full gap-4 py-8 sm:!justify-between md:py-12">
           <h3 className="sm:text-left">Events Organized</h3>
           <Link href="/events/create" className="">
             <Button

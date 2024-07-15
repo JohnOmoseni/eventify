@@ -2,10 +2,10 @@ import { createOrderFlw } from "@/server/actions/order.action";
 import { NextResponse } from "next/server";
 import Flutterwave from "flutterwave-node-v3";
 
-const flw = new Flutterwave(
-  process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
-  process.env.FLW_SECRET_KEY,
-);
+// const flw = new Flutterwave(
+//   process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
+//   process.env.FLW_SECRET_KEY,
+// );
 
 export async function POST(request: Request) {
   // If you specified a secret hash, check for the signature
@@ -22,16 +22,14 @@ export async function POST(request: Request) {
 
   // Send an immediate 200 response
   const response = NextResponse.json({ message: "OK" }, { status: 200 });
-  const expectedAmount = "";
-  const expectedCurrency = "NGN";
 
-  const verifyTxn = await flw.Transaction.verify({ id: payload.id });
+  // const verifyTxn = await flw.Transaction.verify({ id: payload.id });
 
-  if (verifyTxn.data.status !== "successful") {
-    // Inform the customer their payment was unsuccessful
-    console.error("Payment verification failed");
-    return response;
-  }
+  // if (verifyTxn.data.status !== "successful") {
+  //   // Inform the customer their payment was unsuccessful
+  //   console.error("Payment verification failed");
+  //   return response;
+  // }
 
   // Do something (that doesn't take too long) with the payload
   const eventType = payload?.event;
