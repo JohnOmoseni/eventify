@@ -5,17 +5,19 @@ import { IEvent } from "@/server/database/models/event.model";
 import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Checkout from "./Checkout";
+import FlwCheckout from "./FlwCheckout";
 
 function CheckoutButton({ event }: { event: IEvent }) {
   const hasEventEnded = new Date(event?.endDateTime) < new Date();
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
 
+  console.log("Checkout button - UserId", userId, user);
+
   return (
     <div className="row-flex gap-3">
       {hasEventEnded ? (
-        <p className="text-sm text-red-400">
-          {" "}
+        <p className="text-base font-medium text-red-400">
           Sorry! Tickets are no longer available
         </p>
       ) : (
@@ -29,7 +31,7 @@ function CheckoutButton({ event }: { event: IEvent }) {
             </Link>
           </SignedOut>
           <SignedIn>
-            <Checkout event={event} userId={userId} />
+            <FlwCheckout event={event} userId={userId} user={user!} />
           </SignedIn>
         </>
       )}

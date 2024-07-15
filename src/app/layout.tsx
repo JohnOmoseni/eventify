@@ -9,6 +9,7 @@ import "./utilities.css";
 
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { Toaster } from "@/components/ui/toaster";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <NextTopLoader />
           <div className="wrapper mx-auto w-full max-w-7xl">{children}</div>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

@@ -9,11 +9,11 @@ import {
   UpdateEventParams,
 } from "@/types/actionTypes";
 import { connectToDatabase } from "../database";
-import { handleApiError } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
 import Category from "../database/models/category.model";
+import { handleApiError } from "@/utils";
 
 const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: "i" } });
@@ -37,8 +37,6 @@ export const createEvent = async ({
 }: CreateEventParams) => {
   try {
     await connectToDatabase();
-
-    console.log("running create event on backend");
 
     // find the organizer of this event
     const organizer = await User.findById(userId);

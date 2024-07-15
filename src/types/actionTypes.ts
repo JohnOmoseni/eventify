@@ -112,9 +112,34 @@ export type CheckoutOrderParams = {
   buyerId: string;
 };
 
+export type CheckOutOrderParamsFlw = {
+  eventTitle: string;
+  eventDesc: string;
+  eventId: string;
+  price: string;
+  isFree: boolean;
+  buyerId: string;
+  eventLogo: string;
+  user: {
+    email: string;
+    username?: string;
+    phoneNumber: string;
+  };
+};
+
+export type CreateOrderParamsFlw = {
+  flwId: string;
+  eventId: string;
+  buyerId: string;
+  status: string;
+  totalAmount: string;
+  paymentType: string;
+  issuer?: string;
+  createdAt: Date;
+};
+
 export type CreateOrderParams = {
   stripeId?: string;
-  flwId?: string;
   eventId: string;
   buyerId: string;
   totalAmount: string;

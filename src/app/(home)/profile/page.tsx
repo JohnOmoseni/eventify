@@ -7,11 +7,9 @@ import Collection from "../_sections/Collection";
 import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 
 async function Profile() {
-  const { userId } = auth();
-
-  console.log(userId);
-
-  // if (!userId) return null;
+  // customize your session token
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
 
   // // events organized by user
   // const events = await getEventsByUser({

@@ -22,9 +22,9 @@ function Collection({
   totalPages,
 }: CollectionProps) {
   return (
-    <div className="flex-column gap-6">
+    <div className="flex-column w-full gap-6">
       {events?.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-10 lg:grid-cols-3">
+        <ul className="grid w-full grid-cols-1 items-center justify-center gap-8 py-3 sm:grid-cols-2 md:gap-10 lg:grid-cols-3">
           {events.map((event, idx) => {
             const hidePrice = collectionType === "My_Events";
             const hasOrderLink = collectionType === "Events_Organized";
@@ -40,7 +40,7 @@ function Collection({
           })}
         </ul>
       ) : (
-        <div className="flex-column grid min-h-[150px] w-full place-items-center !items-center gap-2 px-3 py-4">
+        <div className="flex-column grid min-h-[200px] w-full place-items-center !items-center gap-2 px-3 py-4">
           <h3 className="text-center font-bold">{emptyTitle}</h3>
           <p className="text-center text-sm">{emptySubText}</p>
         </div>

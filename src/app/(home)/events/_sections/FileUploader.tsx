@@ -4,12 +4,11 @@ import { useCallback, Dispatch, SetStateAction } from "react";
 import { useDropzone } from "@uploadthing/react/hooks";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
-import { useUploadThing } from "@/utils/uploadthing";
-
-import { convertFileToUrl } from "@/lib/utils";
 import { Button } from "@/components/Button";
 import { Upload } from "@/constants/icons";
 import { twMerge } from "tailwind-merge";
+import { convertFileToUrl, toastNotify } from "@/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 type FileUploaderProps = {
   onFieldChange: (url: string) => void;
@@ -22,10 +21,23 @@ export function FileUploader({
   onFieldChange,
   setFiles,
 }: FileUploaderProps) {
+  const { toast } = useToast();
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(imageUrl, convertFileToUrl(acceptedFiles[0]));
+    const selectedFile = acceptedFiles[0];
+
+    if (!selectedFile.type.startsWith("image/")) {
+      toastNotify(toast, "Please select a JPG, PNG, or SVG file.", "");
+      return;
+    }
+
+    // Check file size
+    if (selectedFile.size > 4 * 1024 * 1024) {
+      toastNotify(toast, "File size exceeds 4MB", "");
+      return;
+    }
+
     setFiles(acceptedFiles);
-    onFieldChange(convertFileToUrl(acceptedFiles[0]));
+    onFieldChange(convertFileToUrl(selectedFile));
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -50,7 +62,7 @@ export function FileUploader({
             alt="image"
             width={250}
             height={250}
-            className="max-h-[350px] w-full object-cover object-center"
+            className="max-h-[300px] w-full object-cover object-center"
           />
         </div>
       ) : (

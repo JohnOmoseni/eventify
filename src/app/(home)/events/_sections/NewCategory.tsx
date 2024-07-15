@@ -20,7 +20,6 @@ import {
 
 import { ICategory } from "@/server/database/models/category.model";
 import { Close } from "@/constants/icons";
-import { Button } from "@/components/Button";
 import {
   createCategory,
   getAllCategories,
@@ -29,7 +28,7 @@ import InputField from "@/components/InputField";
 
 type NewCategoryProps = {
   value?: string;
-  onChangeHandler?: (value: string) => void;
+  onChangeHandler: (value: string) => void;
 };
 
 const NewCategory = ({ value, onChangeHandler }: NewCategoryProps) => {
@@ -46,12 +45,13 @@ const NewCategory = ({ value, onChangeHandler }: NewCategoryProps) => {
 
     try {
       category = await createCategory({ categoryName: newCategory.trim() });
-      console.log("Adding category: " + category);
+      console.log("Added category: " + category);
+
+      onChangeHandler(category?._id!);
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
-
       setCategories((prev) => [...prev, category]);
       setNewCategory("");
     }
@@ -60,7 +60,6 @@ const NewCategory = ({ value, onChangeHandler }: NewCategoryProps) => {
   useEffect(() => {
     const getCategories = async () => {
       const categoryList: ICategory[] = await getAllCategories();
-      console.log(categoryList);
 
       categoryList && setCategories(categoryList);
     };

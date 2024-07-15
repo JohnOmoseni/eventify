@@ -1,12 +1,10 @@
-import Image from "next/image";
-import image from "@/images/hero.png";
 import Link from "next/link";
-import ConfirmDelete from "../../../components/ConfirmDelete";
 import { twMerge } from "tailwind-merge";
 import { IEvent } from "@/server/database/models/event.model";
-import { formatDateTime } from "@/lib/utils";
-import { auth, currentUser } from "@clerk/nextjs/server";
-import { Location } from "@/constants/icons";
+import { auth } from "@clerk/nextjs/server";
+import { ArrowUp, Location } from "@/constants/icons";
+import { formatDateTime } from "@/utils";
+import ConfirmDelete from "@/components/ConfirmDelete";
 
 type CardProps = {
   event: IEvent;
@@ -16,22 +14,22 @@ type CardProps = {
 
 function Card({ event, hasOrderLink, hidePrice }: CardProps) {
   // customize your session token
-  const { userId } = auth();
-  // const userId = sessionClaims?.userId as string;
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
 
   const isEventCreator = event?.organizer._id.toString() === (userId as string);
 
   return (
-    <li className="flex-column group relative min-h-[360px] w-full gap-3 overflow-hidden rounded-xl border border-border shadow-sm transition-all hover:shadow-lg lg:min-h-[438px]">
+    <li className="flex-column group relative min-h-[400px] w-full min-w-[300px] overflow-hidden rounded-xl border border-t-0 border-border-100 shadow-sm transition-sm hover:shadow-md lg:min-h-[438px]">
       <Link
         href={`/events/${event._id}`}
-        className="flex w-full flex-grow bg-cover bg-center"
-        style={{ backgroundImage: `url(${event.imageUrl ?? image})` }}
+        className="flex min-h-[230px] w-full flex-grow bg-cover bg-center"
+        style={{ backgroundImage: `url(${event.imageUrl})` }}
       />
 
       {/* Is Event Creator */}
       {isEventCreator && !hidePrice && (
-        <div className="flex-column absolute right-2 top-2 !items-center gap-4 rounded-xl bg-background p-3 shadow-sm transition-all">
+        <div className="flex-column absolute right-2 top-2 !items-center gap-4 rounded-xl bg-background p-2 shadow-sm transition-sm">
           <Link href={`/events/${event?._id}/update`}>
             <span className="icon">
               <Location size={20} />
@@ -42,11 +40,8 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
         </div>
       )}
 
-      <div
-        className="flex w-full flex-grow bg-cover bg-center"
-        style={{ backgroundImage: `url(${event.imageUrl})` }}
-      >
-        <div className="flex-column min-h-[230px] gap-3 px-4 py-5 md:gap-5">
+      <div className="flex-column h-full w-full gap-3 px-4 pb-4 pt-5">
+        <div className="row-flex-btwn w-full gap-3">
           {!hidePrice && (
             <div className="row-flex-start gap-2">
               <p
@@ -55,52 +50,44 @@ function Card({ event, hasOrderLink, hidePrice }: CardProps) {
                   "bg-green-500/30 px-6 text-green-700 hover:bg-green-500/50 focus:ring-green-400",
                 )}
               >
-                {event?.isFree ? "FREE" : `$${event?.price}100`}
+                {event?.isFree ? "FREE" : `$${event?.price}`}
               </p>
               <p
                 className={twMerge(
                   "badge",
-                  "truncate bg-neutral-500/20 px-6 text-neutral-500 hover:bg-neutral-500/50 focus:ring-neutral-400",
+                  "line-clamp-1 truncate bg-neutral-500/20 px-6 text-neutral-500 hover:bg-neutral-500/50 focus:ring-neutral-400",
                 )}
               >
                 {event?.category?.name}
-                Development
               </p>
             </div>
           )}
 
-          <p className="my-3 ml-1 text-base font-medium leading-4 text-foreground-100">
+          <p className="text-end text-sm font-medium leading-4 text-foreground-100">
             {formatDateTime(event?.startDateTime).dateTime}
           </p>
+        </div>
 
-          <Link href={`/events/${event._id}`}>
-            <h3 className="line-clamp-2 flex-1">
-              {event?.title}Github Universe 2023
-            </h3>
-          </Link>
+        <Link href={`/events/${event._id}`} className="my-4 inline-flex">
+          <h3 className="line-clamp-2">{event?.title}</h3>
+        </Link>
 
-          <div>
-            <p className="mt-auto text-sm font-medium leading-4 text-foreground-100">
-              {event?.organizer.firstName} {event?.organizer.firstName}
-              Adrian | JS Mastery
-            </p>
+        <div className="mt-auto">
+          <p className="text-base font-medium leading-4 text-foreground-100">
+            {event?.organizer.firstName} {event?.organizer.firstName}
+          </p>
 
-            {hasOrderLink && (
-              <Link
-                href={`/orders?eventId=${event?._id}`}
-                className="row-flex gap-2"
-              >
-                <p className="text-secondary">Order</p>
-                <Image
-                  src={image}
-                  alt="search"
-                  width={10}
-                  height={10}
-                  className=""
-                />
-              </Link>
-            )}
-          </div>
+          {hasOrderLink && (
+            <Link
+              href={`/orders?eventId=${event?._id}`}
+              className="row-flex gap-2"
+            >
+              <p className="text-base text-secondary">Order</p>
+              <span className="icon">
+                <ArrowUp size={20} />
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </li>

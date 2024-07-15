@@ -2,18 +2,83 @@
 
 import {
   CheckoutOrderParams,
+  CheckOutOrderParamsFlw,
   CreateOrderParams,
+  CreateOrderParamsFlw,
   GetOrdersByEventParams,
   GetOrdersByUserParams,
 } from "@/types/actionTypes";
 import { redirect } from "next/navigation";
 import { connectToDatabase } from "../database";
 import { ObjectId } from "mongodb";
-import { handleApiError } from "@/lib/utils";
+import { v4 as uuid } from "uuid";
+
 import User from "../database/models/user.model";
 import Order from "../database/models/order.model";
 import Event from "../database/models/event.model";
 import Stripe from "stripe";
+import axios from "axios";
+import { handleApiError } from "@/utils";
+
+export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
+  const price = order.isFree ? 0 : Number(order.price);
+
+  try {
+    const response = await axios.post(
+      "https://api.flutterwave.com/v3/payments",
+      {
+        tx_ref: uuid(),
+        amount: price,
+        currency: "NGN",
+        payment_options: "card,mobilemoney,ussd",
+        redirect_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
+        customer: {
+          email: order.user?.email,
+          name: order.user?.username,
+          phone_number: order.user?.phoneNumber,
+        },
+        meta: { eventId: order.eventId, buyerId: order.buyerId },
+        customizations: {
+          title: order.eventTitle,
+          description: order.eventDesc,
+          logo: order.eventLogo,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    console.log(response.data);
+
+    if (response.data?.status === "success") {
+      redirect(response.data?.data?.link);
+    }
+
+    // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/`);
+  } catch (err) {
+    handleApiError(err);
+  }
+};
+
+export const createOrderFlw = async (order: CreateOrderParamsFlw) => {
+  try {
+    await connectToDatabase();
+
+    const newOrder = await Order.create({
+      ...order,
+      event: order.eventId,
+      buyer: order.buyerId,
+    });
+
+    return JSON.parse(JSON.stringify(newOrder));
+  } catch (error) {
+    handleApiError(error);
+  }
+};
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);

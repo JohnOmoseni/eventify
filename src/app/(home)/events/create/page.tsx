@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import EventForm from "../_sections/EventForm";
 
 async function CreateEvent() {
@@ -6,8 +6,7 @@ async function CreateEvent() {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  // returns the clerkId
-  // const { userId }: { userId: string | null } = auth();
+  // returns the clerkId:  const { userId }: { userId: string | null } = auth();
 
   console.log("UserID:", userId);
 

@@ -4,7 +4,6 @@ import {
   getRelatedEventsByCategory,
 } from "@/server/actions/event.actions";
 import Image from "next/image";
-import image from "@/images/hero.png";
 import Details from "../_sections/Details";
 import FallbackLoader from "@/components/fallbacks/FallbackLoader";
 import Collection from "../../_sections/Collection";
@@ -18,44 +17,43 @@ async function EventDetails({ params, searchParams }: EventDetailsProps) {
   const { id } = params;
 
   const event = await getEventById(id);
+
   const relatedEvents = await getRelatedEventsByCategory({
     eventId: event._id,
     categoryId: event.category._id,
     page: searchParams?.page as string,
   });
 
-  console.log(event);
-
   return (
-    <div className="px-2 sm:px-4">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div className="relative">
+    <div className="pt-8">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="relative overflow-hidden rounded-sm">
           <Image
-            src={event?.url ?? image}
-            alt="hero-image"
+            src={event.imageUrl}
+            alt="event-image"
             width={1000}
             height={1000}
-            className="h-full min-h-[300px] object-contain object-center"
+            className="h-full min-h-[300px] object-cover object-center"
           />
         </div>
 
-        <div className="flex flex-1 flex-col gap-8 px-1 sm:p-10">
+        <div className="flex flex-1 flex-col gap-8 p-5 px-1 md:p-8">
           <Details event={event} />
         </div>
+      </div>
 
-        {/* EVENTS WITH THE SAME CATEGORY */}
-        <div className="my-8">
-          <h2 className="mb-8 md:mb-12">Related Events</h2>
-          <Collection
-            data={relatedEvents?.data}
-            emptyTitle="No Events Found"
-            emptySubText="Come back later"
-            collectionType="All_Events"
-            limit={6}
-            page={1}
-            totalPages={relatedEvents?.totalPages}
-          />
-        </div>
+      {/* EVENTS WITH THE SAME CATEGORY */}
+      <div className="mb-4 mt-10">
+        <h2 className="mb-6 md:mb-8">Related Events</h2>
+        <Collection
+          data={relatedEvents?.data}
+          emptyTitle="No Events Found"
+          emptySubText="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={relatedEvents?.totalPages}
+        />
       </div>
     </div>
   );

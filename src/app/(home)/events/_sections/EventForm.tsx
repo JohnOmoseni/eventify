@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { eventDefaultValues } from "@/constants";
 import { eventFormSchema } from "@/schema";
-import { handleApiError } from "@/lib/utils";
 import { InferType } from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -14,6 +13,8 @@ import { useUploadThing } from "@/utils/uploadthing";
 import { createEvent, updateEvent } from "@/server/actions/event.actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Location, DollarSign, LinkIcon } from "@/constants/icons";
+import { handleApiError, toastNotify } from "@/utils";
+import { useToast } from "@/components/ui/use-toast";
 import FormGroup from "../_sections/FormGroup";
 import InputField from "@/components/InputField";
 import FormWrapper from "../_sections/FormWrapper";
@@ -24,6 +25,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function EventForm({ event, eventId, userId, type }: EventFormProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const { toast } = useToast();
+
   const initialValues =
     event && type === "Update"
       ? {
@@ -65,12 +68,10 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
 
         if (newEvent) {
           actions.resetForm();
-
           router.push(`/events/${newEvent._id}`);
         }
-
-        console.log(newEvent);
       } catch (error) {
+        toastNotify(toast, "Error creating event", "Something went wrong");
         handleApiError(error);
       }
     }
@@ -95,6 +96,7 @@ function EventForm({ event, eventId, userId, type }: EventFormProps) {
           router.push(`/events/${updatedEvent._id}`);
         }
       } catch (error) {
+        toastNotify(toast, "Error updating event", "Something went wrong");
         handleApiError(error);
       }
     }

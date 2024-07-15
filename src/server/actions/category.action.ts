@@ -1,6 +1,6 @@
 "use server";
 
-import { handleApiError } from "@/lib/utils";
+import { handleApiError } from "@/utils";
 import { connectToDatabase } from "../database";
 import Category from "../database/models/category.model";
 
