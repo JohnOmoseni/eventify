@@ -18,7 +18,6 @@ export async function POST(request: Request) {
   }
 
   const payload = await request.json();
-  console.log("Flw Wwebhook payload", payload);
 
   // Send an immediate 200 response
   const response = NextResponse.json(

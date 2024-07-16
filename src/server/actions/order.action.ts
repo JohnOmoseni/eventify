@@ -49,10 +49,8 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
       },
     );
 
-    console.log("Getting payment link - Response Data", response.data);
-
     if (response.data?.status === "success") {
-      redirect(response.data?.data?.link);
+      redirect(response.data.data?.link);
     } else {
       redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/`);
     }
