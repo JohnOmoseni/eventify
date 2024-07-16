@@ -30,6 +30,7 @@ function FlwCheckout({
         phoneNumber: user?.phoneNumbers[0]?.phoneNumber as string,
       },
     };
+    console.log("Initializing Order", order);
 
     await checkoutOrderFlw(order);
   };

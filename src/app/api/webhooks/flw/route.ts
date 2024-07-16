@@ -18,10 +18,13 @@ export async function POST(request: Request) {
   }
 
   const payload = await request.json();
-  console.log(payload);
+  console.log("Flw Wwebhook payload", payload);
 
   // Send an immediate 200 response
-  const response = NextResponse.json("", { status: 200 });
+  const response = NextResponse.json(
+    { message: "Webhook received successfully!" },
+    { status: 200 },
+  );
 
   // Do something (that doesn't take too long) with the payload
   const eventType = payload?.event;
@@ -38,7 +41,7 @@ export async function POST(request: Request) {
   // Perform long-running tasks asynchronously
   // setTimeout(async () => {
   // Long-running tasks go here
-  console.log("Processing payload:", eventType, data);
+  console.log("Processing payload:", eventType, data, data?.meta);
 
   if (eventType === "charge.completed") {
     const { flw_ref: id, amount, payment_type, meta, status } = data;
@@ -55,7 +58,7 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     };
 
-    console.log(order, data);
+    console.log("Adding to db", order);
     try {
       const newOrder = await createOrderFlw(order);
 

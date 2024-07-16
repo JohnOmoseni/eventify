@@ -34,12 +34,12 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
           name: order.user?.username,
           phone_number: order.user?.phoneNumber,
         },
-        meta: { eventId: order.eventId, buyerId: order.buyerId },
         customizations: {
           title: order.eventTitle,
           description: order.eventDesc,
           logo: order.eventLogo,
         },
+        meta: { eventId: order.eventId, buyerId: order.buyerId },
       },
       {
         headers: {
@@ -49,7 +49,7 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
       },
     );
 
-    console.log(response.data);
+    console.log("Getting payment link - Response Data", response.data);
 
     if (response.data?.status === "success") {
       redirect(response.data?.data?.link);
