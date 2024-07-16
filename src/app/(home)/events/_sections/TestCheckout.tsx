@@ -40,7 +40,7 @@ function TestCheckout({
     customer: {
       email: user?.emailAddresses[0].emailAddress as string,
       name: user?.username || `${user?.firstName} ${user?.lastName}`,
-      phone_number: user?.phoneNumbers[0].phoneNumber as string,
+      phone_number: user?.phoneNumbers[0]?.phoneNumber as string,
     },
     meta: { eventId: order.eventId, buyerId: order.buyerId },
     customizations: {
