@@ -4,7 +4,7 @@ import { Button } from "@/components/Button";
 import { createMetadata } from "@/server/actions/metadata.actions";
 import { checkoutOrderFlw } from "@/server/actions/order.action";
 import { IEvent } from "@/server/database/models/event.model";
-import { v4 as uuid } from "uuid";
+import { FormEvent } from "react";
 
 function FlwCheckout({
   event,
@@ -17,7 +17,9 @@ function FlwCheckout({
 }) {
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
 
-  const onCheckoutFlw = async () => {
+  const onCheckoutFlw = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const metadata = {
       eventId: event._id,
       buyerId: userId,
@@ -27,7 +29,7 @@ function FlwCheckout({
     if (!tx_reference) console.log("Tranasaction reference not created");
 
     const order = {
-      tx_reference: uuid(),
+      tx_reference,
       eventTitle: event.title,
       price: event.price,
       isFree: event.isFree,
