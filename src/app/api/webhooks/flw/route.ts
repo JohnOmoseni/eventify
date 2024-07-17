@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   const verifyTxn = await flw.Transaction.verify({ id: data.id });
 
-  if (verifyTxn.data.status !== "successful") {
+  if (verifyTxn.data.status !== "success") {
     // Inform the customer their payment was unsuccessful
     console.error("Payment verification failed");
     return NextResponse.json(
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
   // Perform long-running tasks asynchronously - Long-running tasks go here
   // setTimeout(async () => {
-  console.log("Processing payload:", eventType, data, verifyTxn);
+  console.log("Processing payload:", eventType, data, "verifyTxn:", verifyTxn);
 
   if (eventType === "charge.completed") {
     const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
