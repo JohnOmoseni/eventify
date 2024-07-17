@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { createMetadata } from "@/server/actions/metadata.actions";
 import { checkoutOrderFlw } from "@/server/actions/order.action";
 import { IEvent } from "@/server/database/models/event.model";
+import { v4 as uuid } from "uuid";
 
 function FlwCheckout({
   event,
@@ -26,7 +27,7 @@ function FlwCheckout({
     if (!tx_reference) console.log("Tranasaction reference not created");
 
     const order = {
-      tx_reference,
+      tx_reference: uuid(),
       eventTitle: event.title,
       price: event.price,
       isFree: event.isFree,
@@ -44,7 +45,7 @@ function FlwCheckout({
   };
 
   return (
-    <form action={onCheckoutFlw} method="POST">
+    <form onSubmit={onCheckoutFlw}>
       <Button
         title={label}
         type="submit"

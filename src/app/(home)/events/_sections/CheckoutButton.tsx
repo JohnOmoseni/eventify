@@ -11,7 +11,7 @@ function CheckoutButton({ event }: { event: IEvent }) {
   const { user } = useUser();
   const userId = user?.publicMetadata?.userId as string;
 
-  console.log("Checkout button - UserId", userId, user);
+  console.log("Checkout button - UserId", userId);
 
   return (
     <div className="row-flex gap-3">

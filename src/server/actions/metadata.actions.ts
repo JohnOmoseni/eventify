@@ -1,3 +1,5 @@
+"use server";
+
 import { MetaDataParams } from "@/types/actionTypes";
 import { connectToDatabase } from "../database";
 import { v4 as uuid } from "uuid";
@@ -12,6 +14,8 @@ export async function createMetadata(metadata: MetaDataParams) {
   try {
     const tx_reference = uuid();
     await MetaData.create({ tx_reference, ...metadata });
+
+    console.log(tx_reference);
 
     return JSON.parse(JSON.stringify({ tx_reference }));
   } catch (error) {
