@@ -42,7 +42,6 @@ function TestCheckout({
       name: user?.username || `${user?.firstName} ${user?.lastName}`,
       phone_number: user?.phoneNumbers[0]?.phoneNumber as string,
     },
-    meta: { eventId: order.eventId, buyerId: order.buyerId },
     customizations: {
       title: order.eventTitle,
       description: order.eventDesc,
@@ -52,7 +51,7 @@ function TestCheckout({
 
   const handleFlutterPayment = useFlutterwave(config);
 
-  console.log("Initializing Order", order, config, handleFlutterPayment);
+  console.log("Initializing Order", order, config);
 
   const onCheckout = async () => {
     try {

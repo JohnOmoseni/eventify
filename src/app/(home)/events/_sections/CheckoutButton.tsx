@@ -4,7 +4,7 @@ import { Button } from "@/components/Button";
 import { IEvent } from "@/server/database/models/event.model";
 import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import TestCheckout from "./TestCheckout";
+import FlwCheckout from "./FlwCheckout";
 
 function CheckoutButton({ event }: { event: IEvent }) {
   const hasEventEnded = new Date(event?.endDateTime) < new Date();
@@ -30,8 +30,7 @@ function CheckoutButton({ event }: { event: IEvent }) {
             </Link>
           </SignedOut>
           <SignedIn>
-            {/* <FlwCheckout event={event} userId={userId} user={user!} /> */}
-            <TestCheckout event={event} userId={userId} user={user!} />
+            <FlwCheckout event={event} userId={userId} user={user!} />
           </SignedIn>
         </>
       )}
