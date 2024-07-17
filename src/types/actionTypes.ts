@@ -15,6 +15,12 @@ export type UpdateUserParams = {
   photo: string;
 };
 
+// ====== METADATA PARAMS
+export type MetaDataParams = {
+  eventId: string;
+  buyerId: string;
+};
+
 // ====== EVENT PARAMS
 export type CreateEventParams = {
   userId: string;
@@ -105,12 +111,11 @@ export type CreateCategoryParams = {
 
 // ====== ORDER PARAMS
 export type CheckOutOrderParamsFlw = {
+  tx_reference: string;
   eventTitle: string;
   eventDesc: string;
-  eventId: string;
   price: string;
   isFree: boolean;
-  buyerId: string;
   eventLogo: string;
   user: {
     email: string;
@@ -120,6 +125,7 @@ export type CheckOutOrderParamsFlw = {
 };
 
 export type CreateOrderParamsFlw = {
+  txnId: string;
   flwId: string;
   eventId: string;
   buyerId: string;

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
+import { createMetadata } from "@/server/actions/metadata.actions";
 import { checkoutOrderFlw } from "@/server/actions/order.action";
 import { IEvent } from "@/server/database/models/event.model";
 
@@ -16,12 +17,19 @@ function FlwCheckout({
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
 
   const onCheckoutFlw = async () => {
-    const order = {
-      eventTitle: event.title,
+    const metadata = {
       eventId: event._id,
+      buyerId: userId,
+    };
+
+    const { tx_reference } = await createMetadata(metadata);
+    if (!tx_reference) console.log("Tranasaction reference not created");
+
+    const order = {
+      tx_reference,
+      eventTitle: event.title,
       price: event.price,
       isFree: event.isFree,
-      buyerId: userId,
       eventDesc: event.description,
       eventLogo: event.imageUrl,
       user: {

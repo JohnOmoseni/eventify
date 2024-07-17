@@ -8,14 +8,13 @@ import {
 } from "@/types/actionTypes";
 import { redirect } from "next/navigation";
 import { connectToDatabase } from "../database";
+import { handleApiError } from "@/utils";
 import { ObjectId } from "mongodb";
-import { v4 as uuid } from "uuid";
 
 import User from "../database/models/user.model";
 import Order, { IOrder } from "../database/models/order.model";
 import Event from "../database/models/event.model";
 import axios from "axios";
-import { handleApiError } from "@/utils";
 
 export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
   const price = order.isFree ? 0 : Number(order.price);
@@ -24,7 +23,7 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
     const response = await axios.post(
       "https://api.flutterwave.com/v3/payments",
       {
-        tx_ref: uuid(),
+        tx_ref: order?.tx_reference,
         amount: price,
         currency: "NGN",
         payment_options: "card,mobilemoney,ussd",
@@ -39,7 +38,6 @@ export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
           description: order.eventDesc,
           logo: order.eventLogo,
         },
-        meta: { eventId: order.eventId, buyerId: order.buyerId },
       },
       {
         headers: {

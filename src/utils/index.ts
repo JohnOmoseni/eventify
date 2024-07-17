@@ -106,9 +106,9 @@ export function removeKeysFromQuery({
 }
 
 export const handleApiError = (error: any, message?: string) => {
-  console.error(`API Error - ${message}:`, error);
+  console.error("API Error", message, error);
   if (error.response) {
-    // Server returned a responnse not in the 200 range
+    // Server returned a response not in the 200 range
     console.error("Response data:", error.response.data);
     console.error("Response status:", error.response.status);
   } else if (error.request) {
