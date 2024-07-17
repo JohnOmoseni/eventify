@@ -30,20 +30,20 @@ export async function POST(request: Request) {
   const eventType = payload?.event;
   const data = payload?.data;
 
-  const verifyTxn = await flw.Transaction.verify({ id: data.id });
+  // const verifyTxn = await flw.Transaction.verify({ id: data.id });
 
-  if (verifyTxn.data.status !== "success") {
-    // Inform the customer their payment was unsuccessful
-    console.error("Payment verification failed");
-    return NextResponse.json(
-      { message: "Payment verification failed" },
-      { status: 500 },
-    );
-  }
+  // if (verifyTxn.data.status !== "success") {
+  //   // Inform the customer their payment was unsuccessful
+  //   console.error("Payment verification failed");
+  //   return NextResponse.json(
+  //     { message: "Payment verification failed" },
+  //     { status: 500 },
+  //   );
+  // }
 
   // Perform long-running tasks asynchronously - Long-running tasks go here
   // setTimeout(async () => {
-  console.log("Processing payload:", eventType, data, "verifyTxn:", verifyTxn);
+  console.log("Processing payload:", eventType, data);
 
   if (eventType === "charge.completed") {
     const { flw_ref, id, tx_ref, amount, payment_type, status } = data;

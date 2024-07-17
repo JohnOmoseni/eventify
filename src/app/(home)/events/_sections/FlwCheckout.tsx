@@ -4,7 +4,7 @@ import { Button } from "@/components/Button";
 import { createMetadata } from "@/server/actions/metadata.actions";
 import { checkoutOrderFlw } from "@/server/actions/order.action";
 import { IEvent } from "@/server/database/models/event.model";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 function FlwCheckout({
   event,
@@ -16,6 +16,7 @@ function FlwCheckout({
   userId: string;
 }) {
   const label = event?.isFree ? "Get Ticket" : "Buy Ticket";
+  const [isLoading, setIsLoading] = useState(false);
 
   const onCheckoutFlw = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ function FlwCheckout({
       buyerId: userId,
     };
 
+    setIsLoading(true);
     const { tx_reference } = await createMetadata(metadata);
     if (!tx_reference) console.log("Tranasaction reference not created");
 
@@ -44,6 +46,7 @@ function FlwCheckout({
     console.log("Initializing Order", order);
 
     await checkoutOrderFlw(order);
+    setIsLoading(false);
   };
 
   return (
@@ -52,6 +55,7 @@ function FlwCheckout({
         title={label}
         type="submit"
         className="mt-3 w-fit px-6 py-2 sm:mt-5"
+        disabled={isLoading}
       />
     </form>
   );
