@@ -45,38 +45,38 @@ export async function POST(request: Request) {
   // setTimeout(async () => {
   console.log("Processing payload:", eventType, data);
 
-  if (eventType === "charge.completed") {
-    const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
+  // if (eventType === "charge.completed") {
+  const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
 
-    try {
-      const metadata = await MetaData.findOne({ tx_reference: tx_ref });
+  try {
+    const metadata = await MetaData.findOne({ tx_reference: tx_ref });
 
-      if (metadata) {
-        const { eventId, buyerId } = metadata;
-        const chargedAmount = amount ? amount : 0;
+    console.log(metadata);
 
-        const order = {
-          txnId: id,
-          flwId: flw_ref,
-          eventId,
-          buyerId,
-          totalAmount: chargedAmount.toString(),
-          paymentType: payment_type,
-          status,
-          createdAt: new Date(),
-        };
+    // if (metadata) {
+    const { eventId, buyerId } = metadata;
+    const chargedAmount = amount ? amount : 0;
 
-        console.log("Adding to db", order, metadata);
-        const newOrder = await createOrderFlw(order);
-        console.log("Order created successfully:", newOrder);
+    const order = {
+      txnId: id,
+      flwId: flw_ref,
+      eventId,
+      buyerId,
+      totalAmount: chargedAmount.toString(),
+      paymentType: payment_type,
+      status,
+      createdAt: new Date(),
+    };
 
-        return response;
-      }
-    } catch (error) {
-      handleApiError(error);
-    }
+    console.log("Adding to db", order, metadata);
+    const newOrder = await createOrderFlw(order);
+    console.log("Order created successfully:", newOrder);
+
+    return response;
+    // }
+  } catch (error) {
+    handleApiError(error);
   }
+  // }
   // }, 0);
-
-  return response;
 }
