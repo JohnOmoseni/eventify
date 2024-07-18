@@ -43,36 +43,37 @@ async function processWebhook(payload: any) {
   // setTimeout(async () => {
   console.log("Processing payload:", eventType, data);
 
-  if (eventType === "charge.completed") {
-    const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
+  // if (eventType === "charge.completed") {
+  const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
 
-    try {
-      const metadata = await MetaData.findOne({ tx_reference: tx_ref });
-      console.log(metadata);
+  console.log("running");
+  try {
+    const metadata = await MetaData.findOne({ tx_reference: tx_ref });
+    console.log(metadata);
 
-      if (metadata) {
-        const { eventId, buyerId } = metadata;
-        const chargedAmount = amount ? amount : 0;
+    // if (metadata) {
+    const { eventId, buyerId } = metadata;
+    const chargedAmount = amount ? amount : 0;
 
-        const order: CreateOrderParamsFlw = {
-          txnId: id,
-          flwId: flw_ref,
-          event: eventId,
-          buyer: buyerId,
-          totalAmount: chargedAmount.toString(),
-          paymentType: payment_type,
-          status,
-          createdAt: new Date(),
-        };
+    const order: CreateOrderParamsFlw = {
+      txnId: id,
+      flwId: flw_ref,
+      event: eventId,
+      buyer: buyerId,
+      totalAmount: chargedAmount.toString(),
+      paymentType: payment_type,
+      status,
+      createdAt: new Date(),
+    };
+    console.log("Adding to db", order, metadata);
 
-        console.log("Adding to db", order, metadata);
-        const newOrder = await createOrderFlw(order);
-        console.log("Order created successfully:", newOrder);
-      } else {
-        console.error("Metadata not found for transaction reference:", tx_ref);
-      }
-    } catch (error: any) {
-      console.error("Error processing webhook data:", error.message);
-    }
+    const newOrder = await createOrderFlw(order);
+    console.log("Order created successfully:", newOrder);
+    // } else {
+    //   console.error("Metadata not found for transaction reference:", tx_ref);
+    // }
+  } catch (error: any) {
+    console.error("Error processing webhook data:", error.message);
   }
+  // }
 }

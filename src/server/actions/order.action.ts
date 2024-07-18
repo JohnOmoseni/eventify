@@ -65,6 +65,8 @@ export const createOrderFlw = async (order: CreateOrderParamsFlw) => {
       ...order,
     });
 
+    if (newOrder) console.log(newOrder);
+
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     handleApiError(error);
