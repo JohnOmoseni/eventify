@@ -5,7 +5,7 @@ const OrderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  txnId: { type: String, required: true, unique: true },
+  txnId: { type: String, required: true },
   flwId: {
     type: String,
     required: true,

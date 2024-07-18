@@ -11,10 +11,17 @@ import { connectToDatabase } from "../database";
 import { handleApiError } from "@/utils";
 import { ObjectId } from "mongodb";
 
-import User from "../database/models/user.model";
-import Order, { IOrder } from "../database/models/order.model";
-import Event from "../database/models/event.model";
 import axios from "axios";
+import User from "../database/models/user.model";
+import Order from "../database/models/order.model";
+import Event from "../database/models/event.model";
+import MetaData from "../database/models/metadata.model";
+import Flutterwave from "flutterwave-node-v3";
+
+const flw = new Flutterwave(
+  process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
+  process.env.FLW_SECRET_KEY,
+);
 
 export const checkoutOrderFlw = async (order: CheckOutOrderParamsFlw) => {
   const price = order.isFree ? 0 : Number(order.price);
@@ -70,6 +77,45 @@ export const createOrderFlw = async (order: CreateOrderParamsFlw) => {
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     handleApiError(error);
+  }
+};
+
+export const createOrder = async (
+  tx_reference: string,
+  transactionId: string,
+) => {
+  try {
+    await connectToDatabase();
+
+    const txn = await flw.Transaction.verify({ id: transactionId });
+    const { flw_ref, id, tx_ref, amount, payment_type, status } = txn?.data;
+
+    const metadata = await MetaData.findOne({ tx_reference });
+
+    if (metadata) {
+      const { eventId, buyerId } = metadata;
+      const chargedAmount = amount ? amount : 0;
+
+      const order: CreateOrderParamsFlw = {
+        txnId: id,
+        flwId: flw_ref,
+        event: eventId,
+        buyer: buyerId,
+        totalAmount: chargedAmount.toString(),
+        paymentType: payment_type,
+        status,
+        createdAt: new Date(),
+      };
+
+      const newOrder = await createOrderFlw(order);
+      console.log("Order created successfully:", newOrder);
+
+      return JSON.parse(JSON.stringify(newOrder));
+    } else {
+      console.error("Metadata not found for transaction reference:", tx_ref);
+    }
+  } catch (error) {
+    handleApiError(error, "Error processing webhook data:");
   }
 };
 
