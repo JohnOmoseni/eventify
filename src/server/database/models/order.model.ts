@@ -5,6 +5,7 @@ const OrderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  txnId: { type: String, required: true, unique: true },
   flwId: {
     type: String,
     required: true,
@@ -29,6 +30,7 @@ export default Order;
 
 export interface IOrder extends Document {
   createdAt: Date;
+  txnId: string;
   flwId: string;
   totalAmount: string;
   status: string;

@@ -1,13 +1,7 @@
 import { createOrderFlw } from "@/server/actions/order.action";
 import { NextResponse } from "next/server";
-import { handleApiError } from "@/utils";
-import Flutterwave from "flutterwave-node-v3";
 import MetaData from "@/server/database/models/metadata.model";
-
-const flw = new Flutterwave(
-  process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
-  process.env.FLW_SECRET_KEY,
-);
+import { CreateOrderParamsFlw } from "@/types/actionTypes";
 
 export async function POST(request: Request) {
   // If you specified a secret hash, check for the signature
@@ -18,65 +12,67 @@ export async function POST(request: Request) {
     // This request isn't from Flutterwave; discard
     return NextResponse.json({ message: "Forbidden" }, { status: 401 });
   }
-  const payload = await request.json();
 
-  // Send an immediate 200 response
-  const response = NextResponse.json(
-    { message: "Webhook received successfully!" },
-    { status: 200 },
-  );
+  try {
+    const payload = await request.json();
 
-  // Do something (that doesn't take too long) with the payload
+    // Send an immediate 200 response
+    const response = NextResponse.json(
+      { message: "Webhook received successfully!" },
+      { status: 200 },
+    );
+
+    // Process the webhook data asynchronously
+    processWebhook(payload);
+
+    return response;
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: "Error processing webhook", error: error.message },
+      { status: 500 },
+    );
+  }
+}
+
+// Function to process the webhook data asynchronously
+async function processWebhook(payload: any) {
   const eventType = payload?.event;
   const data = payload?.data;
-
-  // const verifyTxn = await flw.Transaction.verify({ id: data.id });
-
-  // if (verifyTxn.data.status !== "success") {
-  //   // Inform the customer their payment was unsuccessful
-  //   console.error("Payment verification failed");
-  //   return NextResponse.json(
-  //     { message: "Payment verification failed" },
-  //     { status: 500 },
-  //   );
-  // }
 
   // Perform long-running tasks asynchronously - Long-running tasks go here
   // setTimeout(async () => {
   console.log("Processing payload:", eventType, data);
 
-  // if (eventType === "charge.completed") {
-  const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
+  if (eventType === "charge.completed") {
+    const { flw_ref, id, tx_ref, amount, payment_type, status } = data;
 
-  try {
-    const metadata = await MetaData.findOne({ tx_reference: tx_ref });
+    try {
+      const metadata = await MetaData.findOne({ tx_reference: tx_ref });
+      console.log(metadata);
 
-    console.log(metadata);
+      if (metadata) {
+        const { eventId, buyerId } = metadata;
+        const chargedAmount = amount ? amount : 0;
 
-    // if (metadata) {
-    const { eventId, buyerId } = metadata;
-    const chargedAmount = amount ? amount : 0;
+        const order: CreateOrderParamsFlw = {
+          txnId: id,
+          flwId: flw_ref,
+          event: eventId,
+          buyer: buyerId,
+          totalAmount: chargedAmount.toString(),
+          paymentType: payment_type,
+          status,
+          createdAt: new Date(),
+        };
 
-    const order = {
-      txnId: id,
-      flwId: flw_ref,
-      eventId,
-      buyerId,
-      totalAmount: chargedAmount.toString(),
-      paymentType: payment_type,
-      status,
-      createdAt: new Date(),
-    };
-
-    console.log("Adding to db", order, metadata);
-    const newOrder = await createOrderFlw(order);
-    console.log("Order created successfully:", newOrder);
-
-    return response;
-    // }
-  } catch (error) {
-    handleApiError(error);
+        console.log("Adding to db", order, metadata);
+        const newOrder = await createOrderFlw(order);
+        console.log("Order created successfully:", newOrder);
+      } else {
+        console.error("Metadata not found for transaction reference:", tx_ref);
+      }
+    } catch (error: any) {
+      console.error("Error processing webhook data:", error.message);
+    }
   }
-  // }
-  // }, 0);
 }

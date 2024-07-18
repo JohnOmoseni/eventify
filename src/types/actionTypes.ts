@@ -125,14 +125,14 @@ export type CheckOutOrderParamsFlw = {
 };
 
 export type CreateOrderParamsFlw = {
+  createdAt: Date;
   txnId: string;
   flwId: string;
-  eventId: string;
-  buyerId: string;
-  status: string;
   totalAmount: string;
+  status: string;
   paymentType?: string;
-  createdAt: Date;
+  event: string;
+  buyer: string;
 };
 
 export type GetOrdersByEventParams = {
